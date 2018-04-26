@@ -1,8 +1,19 @@
 #pragma once
 #include "CDoubleBuffering.h"
+#define LAND_LINE_LEN 6
+#define TILE_HORIZONTAL_LEN 15
+#define TILE_VERTICAL_LEN 6
+typedef struct   // 0번째 인덱스마다 Extra Land
+{
+	int Top[6];
+	int Bottom[6];
+	int Left[6];
+	int Right[6];
+}_LANDS;
 class CGame
 {
 private:
+	_LANDS Lands;
 	CDoubleBuffering m_DBBF;	// 더블 버퍼링을 사용하기 위한 멤버 변수
 
 	// 인트로에 나올 메시지
@@ -28,12 +39,18 @@ private:
 		"============================================+*##################################################*======++++++++===============\n"
 		"===============================================+*################################################=============================\n"
 		"==================================================+*======++*********************************++===============================\n";
-	
+private:
+	void gotoxy(int x, int y);
+	void Print_Game_Board();
+	void TextColor(int foreground, int background);
+	void Print_Tile(int x, int y);
+
+
 public:
 	CGame();
 	~CGame();
 
-	void TextColor(int foreground, int background);
 	void PrintIntro();
+	void PlayGame();
 };
 
