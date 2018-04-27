@@ -1,24 +1,18 @@
 #pragma once
 #include "CDoubleBuffering.h"
-#define LAND_LINE_LEN 6
-#define TILE_HORIZONTAL_LEN 16
-#define TILE_VERTICAL_LEN 4
-typedef struct   // 0번째 인덱스마다 Extra Land
-{
-	int Top[6];
-	int Bottom[6];
-	int Left[6];
-	int Right[6];
-}_LANDS;
+#include "CLand.h"
+#define LAND_LINE_LEN 6	// 한 줄당 길이 
+#define TILE_HORIZONTAL_LEN 16	// 가로 길이
+#define TILE_VERTICAL_LEN 4	// 세로 길이
+#define TILE_DISTANCE 3	// 타일 간의 거리
 typedef enum
 {
-	TOP,BOTTOM,LEFT,RIGHT
-}_LTRB;
+	LEFT,TOP, RIGHT,BOTTOM
+}BOARD_LTRB;	// 게임 판의 상하좌우 열거형
 class CGame
 {
 private:
-	_LANDS Lands;
-	_LTRB LTRB = TOP;
+	BOARD_LTRB eBoardLTRB = TOP;
 	CDoubleBuffering m_DBBF;	// 더블 버퍼링을 사용하기 위한 멤버 변수
 
 	// 인트로에 나올 메시지

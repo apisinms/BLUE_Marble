@@ -149,6 +149,8 @@
   <ItemGroup>
     <ClInclude Include="CDoubleBuffering.h" />
     <ClInclude Include="CGame.h" />
+    <ClInclude Include="CLand.h" />
+    <ClInclude Include="CPlayer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -156,6 +158,8 @@
     <ClCompile Include="BLUE_Marble.cpp" />
     <ClCompile Include="CDoubleBuffering.cpp" />
     <ClCompile Include="CGame.cpp" />
+    <ClCompile Include="CLand.cpp" />
+    <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
