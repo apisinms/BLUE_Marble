@@ -1,0 +1,14 @@
+﻿  stdafx.cpp
+  BLUE_Marble.cpp
+c:\_programming_\school_2a\c++\프로젝트\중간고사과제\blue_marble\blue_marble\cgame.h(31): error C2440: '초기화 중': 'const char [3466]'에서 'TCHAR [4096]'(으)로 변환할 수 없습니다.
+  c:\_programming_\school_2a\c++\프로젝트\중간고사과제\blue_marble\blue_marble\cgame.h(31): note: 문자열 리터럴 형식이 배열 형식과 호환되지 않습니다.
+c:\_programming_\school_2a\c++\프로젝트\중간고사과제\blue_marble\blue_marble\blue_marble.cpp(9): error C2664: 'BOOL SetConsoleTitleW(LPCWSTR)': 인수 1을(를) 'const char [22]'에서 'LPCWSTR'(으)로 변환할 수 없습니다.
+  c:\_programming_\school_2a\c++\프로젝트\중간고사과제\blue_marble\blue_marble\blue_marble.cpp(9): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+  CDice.cpp
+  CDoubleBuffering.cpp
+  CExtraLand.cpp
+  CGame.cpp
+c:\_programming_\school_2a\c++\프로젝트\중간고사과제\blue_marble\blue_marble\cgame.h(31): error C2440: '초기화 중': 'const char [3466]'에서 'TCHAR [4096]'(으)로 변환할 수 없습니다.
+  c:\_programming_\school_2a\c++\프로젝트\중간고사과제\blue_marble\blue_marble\cgame.h(31): note: 문자열 리터럴 형식이 배열 형식과 호환되지 않습니다.
+  CLand.cpp
+  CPlayer.cpp

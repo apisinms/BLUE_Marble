@@ -29,6 +29,6 @@ public:
 	void Build_Building(CPlayer &Player);	// °Ç¹° °Ç¼³
 	void Arrive_Land(CPlayer &Player); // ¶¥¿¡ µµÂø ½Ã.
 	void Sell_Land(CPlayer &Player);	// ¶¥ ÆÈ±â
-	void Print_LandInfo(CDoubleBuffering &DBBF);	// ¶¥ Á¤º¸ Ãâ·Â
+	void Print_LandInfo();	// ¶¥ Á¤º¸ Ãâ·Â
 };
 

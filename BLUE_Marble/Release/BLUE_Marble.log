@@ -1,0 +1,10 @@
+﻿  stdafx.cpp
+  BLUE_Marble.cpp
+  CDice.cpp
+  CDoubleBuffering.cpp
+  CExtraLand.cpp
+  CGame.cpp
+c:\_programming_\school_2a\c++\프로젝트\중간고사과제\blue_marble\blue_marble\cgame.cpp(58): error C2664: 'int wsprintfW(LPWSTR,LPCWSTR,...)': 인수 1을(를) 'char [30]'에서 'LPWSTR'(으)로 변환할 수 없습니다.
+  c:\_programming_\school_2a\c++\프로젝트\중간고사과제\blue_marble\blue_marble\cgame.cpp(58): note: 가리킨 형식이 관련이 없습니다. 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+  CLand.cpp
+  CPlayer.cpp

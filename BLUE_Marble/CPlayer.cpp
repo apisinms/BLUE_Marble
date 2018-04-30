@@ -6,7 +6,25 @@ CPlayer::CPlayer()
 {
 }
 
-
 CPlayer::~CPlayer()
 {
+	if (cPlayer_Shape != NULL)
+	{
+		cPlayer_Shape = nullptr;
+		delete[]cPlayer_Shape;
+	}
+}
+
+
+void CPlayer::Set_PlayerInfo(TCHAR *cPlayer_Shape, int x, int y)
+{
+	this->cPlayer_Shape = new TCHAR[lstrlen(cPlayer_Shape)];
+	lstrcpy(this->cPlayer_Shape, cPlayer_Shape);
+	pos.X = x;
+	pos.Y = y;
+}
+
+void CPlayer::Print_PlayerInfo()
+{
+	g_DBBF.WriteBuffer(pos.X, pos.Y, cPlayer_Shape);
 }

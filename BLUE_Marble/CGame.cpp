@@ -3,9 +3,13 @@
 #include "stdafx.h"
 #include "CGame.h"
 #include <conio.h>	//_kbhit을 사용하기 위해서
+#include <ctime>
+
+CDoubleBuffering g_DBBF;	// 이제 진짜로 정의를 한다(객체가 할당된다)
 CGame::CGame()
 {
-	m_DBBF.CreatBuffer();	// 더블버퍼링을 위한 버퍼를 생성함.
+	srand((unsigned int)time(NULL));	// 난수 심음
+	g_DBBF.CreatBuffer();	// 더블버퍼링을 위한 버퍼를 생성함.
 
 	/// Land의 정보를 초기화한다.
 	{
@@ -37,11 +41,30 @@ CGame::CGame()
 		m_Lands[18].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"런    던", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 17) - 4, (LAND_TEXT_HORIZONTAL * 7) + 1);
 		m_Lands[19].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"평    양", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 21) - 5, (LAND_TEXT_HORIZONTAL * 7) + 1);
 	}
+
+	///ExtranLands에 대한 정보를 초기화 한다.
+	{
+		m_ExtranLands[0].Set_LandInfo((TCHAR *)"출    발", LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_ExtranLands[1].Set_LandInfo((TCHAR *)"무 인 도", LAND_TEXT_VERTICAL, 1);
+		m_ExtranLands[2].Set_LandInfo((TCHAR *)"세계여행", (LAND_TEXT_VERTICAL * 25) - 6, 1);
+		m_ExtranLands[3].Set_LandInfo((TCHAR *)"황금열쇠", (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 7) + 1);
+	}
+	
+	FMOD_System_Create(&g_System);	// 객체 생성
+	FMOD_System_Init(g_System, 32, FMOD_INIT_NORMAL, NULL);	//초기화
+	FMOD_System_CreateSound(g_System, "Sounds\\Intro.mp3", FMOD_LOOP_NORMAL, 0, &BGM_Music[INTRO]);
+	
+	char location[30];
+	for (int i = 0; i < 4; i++)
+	{
+		wsprintf(location, "Sounds\\GamePlay%d.mp3", i + 1);
+		FMOD_System_CreateSound(g_System, location, FMOD_DEFAULT, 0, &BGM_Music[BGM1+i]);
+	}
 }
 
 CGame::~CGame()
 {
-	m_DBBF.DeleteBuffer();	// 더블 버퍼링을 모두 사용했으니 자원을 반납함.
+	g_DBBF.DeleteBuffer();	// 더블 버퍼링을 모두 사용했으니 자원을 반납함.
 	delete[] m_Player;
 }
 
@@ -52,7 +75,41 @@ void CGame::PlayGame()
 	Input_PlayerNum();	// 플레이어의 수를 입력받는다.
 	Print_Game_Board();	// 게임 판 출력
 }
+// 처음 화면 출력
+void CGame::PrintIntro()
+{
+	FMOD_System_PlaySound(g_System, BGM_Music[INTRO], NULL, FALSE, &BGM_Channel[INTRO]);	// 브금 재생
 
+	int x, y;
+	x = 50;
+	y = 0;
+	int color = BLUE;
+	while (true)
+	{
+		if (_kbhit())
+		{
+			_getch();	// 버퍼에 남은(방금 누른 아무키) 키를 제거함.
+			break;
+		}
+
+		// 부루마블 출력 부
+		g_DBBF.TextColor(color++, BLACK);
+		color = (color >= 16) ? BLUE : color;
+		g_DBBF.WriteBuffer(0, 0, IntroMessage);
+
+
+		// 안내문구 출력 부
+		g_DBBF.TextColor(WHITE, BLACK);
+		g_DBBF.WriteBuffer(80, 35, (TCHAR *)"게임을 시작하려면 아무 키나 누르세요");
+
+		// 버퍼 전환 및 클리어
+		g_DBBF.FlippingBuffer();
+		g_DBBF.ClearBuffer();
+
+		Sleep(150);
+	}
+
+}
 // 몇명이 플레이 할 것인지 입력받음
 void CGame::Input_PlayerNum()	// 플레이어의 수를 입력받는다
 {
@@ -72,8 +129,26 @@ void CGame::Input_PlayerNum()	// 플레이어의 수를 입력받는다
 		system("cls");	// 지저분한 화면 지우기
 		if (num >= 2 && num <= 4)
 		{
+			iPlayerNum = num;
 			m_Player = new CPlayer[num];	// 플레이어를 동적할당함
-			//CGame::iPlayerNum = num;	// 플레이어 수를 저장해둠.
+			/// Player의 초기 정보를 셋팅한다.
+			{
+				if (num >= 2)
+				{
+					m_Player[0].Set_PlayerInfo((TCHAR *)"♠", (LAND_TEXT_VERTICAL + P1_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3);
+					m_Player[1].Set_PlayerInfo((TCHAR *)"◆", (LAND_TEXT_VERTICAL + P2_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3);
+				}
+
+				if (num >= 3)
+					m_Player[2].Set_PlayerInfo((TCHAR *)"♥", (LAND_TEXT_VERTICAL + P3_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3);
+
+				if (num >= 4)
+					m_Player[3].Set_PlayerInfo((TCHAR *)"♣", (LAND_TEXT_VERTICAL + P4_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3);
+			}
+			
+			FMOD_Channel_Stop(BGM_Channel[INTRO]);
+			iCurBGM = (rand() % 4) + 1;
+			FMOD_System_PlaySound(g_System, BGM_Music[iCurBGM], NULL, FALSE, &BGM_Channel[iCurBGM]);	// 브금 재생
 			break;
 		}
 	}
@@ -86,46 +161,17 @@ void CGame::TextColor(int foreground, int background)
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
 
-// 처음 화면 출력
-void CGame::PrintIntro()
-{
-	int color = BLUE;
-	while (true)
-	{
-		if (_kbhit())
-		{
-			_getch();	// 버퍼에 남은(방금 누른 아무키) 키를 제거함.
-			break;
-		}
-
-		// 부루마블 출력 부
-		m_DBBF.TextColor(color++, BLACK);
-		color = (color >= 16) ? BLUE : color;
-		m_DBBF.WriteBuffer(0, 0, IntroMessage);
-
-		// 안내문구 출력 부
-		m_DBBF.TextColor(WHITE, BLACK);
-		m_DBBF.WriteBuffer(50, 30, (TCHAR *)"게임을 시작하려면 아무 키나 누르세요");
-
-		// 버퍼 전환 및 클리어
-		m_DBBF.FlippingBuffer();
-		m_DBBF.ClearBuffer();
-
-		Sleep(100);
-	}
-
-}
-
 // 전체 게임 타일 모두 출력
 void CGame::Print_Game_Board()
 {
+	static FMOD_BOOL bSoundPlaying = TRUE;
 	system("mode con cols=200 lines=50");	// 화면 크기 다시 늘림
 	int i, j;
 	i = j = 0;
 
 	while (true)
 	{
-		m_DBBF.ClearBuffer();	// 이전 버퍼의 내용을 모두 지워준다.
+		g_DBBF.ClearBuffer();	// 이전 버퍼의 내용을 모두 지워준다.
 
 		/// 너비와 높이에 맞게 계산하여 타일을 출력한다.
 		for (eBoardLTRB = LEFT, i = 0; i < 4;)
@@ -135,37 +181,37 @@ void CGame::Print_Game_Board()
 				switch (eBoardLTRB)
 				{
 				case LEFT:	// o
-					m_DBBF.TextColor(LIGHTGREEN, BLACK);
+					g_DBBF.TextColor(LIGHTGREEN, BLACK);
 
 					if (j == 0)
-						m_DBBF.TextColor(YELLOW, BLACK);
+						g_DBBF.TextColor(YELLOW, BLACK);
 
 					Print_Tile(0, j * (TILE_VERTICAL_LEN + TILE_DISTANCE));
 					break;
 
 				case TOP:
-					m_DBBF.TextColor(LIGHTBLUE, BLACK);
+					g_DBBF.TextColor(LIGHTBLUE, BLACK);
 
 					if (j == LAND_LINE_LEN - 1)
-						m_DBBF.TextColor(YELLOW, BLACK);
+						g_DBBF.TextColor(YELLOW, BLACK);
 
 					Print_Tile((j * (TILE_HORIZONTAL_LEN + TILE_DISTANCE)) + (TILE_HORIZONTAL_LEN + TILE_DISTANCE), 0);
 					break;
 
 				case RIGHT:
-					m_DBBF.TextColor(LIGHTMAGENTA, BLACK);
+					g_DBBF.TextColor(LIGHTMAGENTA, BLACK);
 
 					if (j == LAND_LINE_LEN - 1)
-						m_DBBF.TextColor(YELLOW, BLACK);
+						g_DBBF.TextColor(YELLOW, BLACK);
 
 					Print_Tile((TILE_HORIZONTAL_LEN * (LAND_LINE_LEN + 1)) + (TILE_DISTANCE - 1), (j * (TILE_VERTICAL_LEN + TILE_DISTANCE)) + (TILE_VERTICAL_LEN + TILE_DISTANCE));
 					break;
 
 				case BOTTOM:
-					m_DBBF.TextColor(LIGHTRED, BLACK);
+					g_DBBF.TextColor(LIGHTRED, BLACK);
 
 					if (j == 0)
-						m_DBBF.TextColor(YELLOW, BLACK);
+						g_DBBF.TextColor(YELLOW, BLACK);
 
 					Print_Tile(j * (TILE_HORIZONTAL_LEN + TILE_DISTANCE), (TILE_VERTICAL_LEN + TILE_DISTANCE) * LAND_LINE_LEN);
 					break;
@@ -175,13 +221,47 @@ void CGame::Print_Game_Board()
 		}
 
 		// 땅 정보를 출력한다.
-		m_DBBF.TextColor(WHITE, BLACK);
+		g_DBBF.TextColor(WHITE, BLACK);
 		for (int i = 0; i < 20; i++)
+			m_Lands[i].Print_LandInfo();
+
+		// 특수 땅 정보를 출력한다
+		g_DBBF.TextColor(BROWN, BLACK);
+		for (int i = 0; i < 4; i++)
+			m_ExtranLands[i].Print_LandInfo();
+
+		for (int i = 0; i < iPlayerNum; i++)
 		{
-			m_Lands[i].Print_LandInfo(m_DBBF);
+			switch (i)
+			{
+			case 0:
+				g_DBBF.TextColor(P1_COLOR, BLACK);
+				break;
+
+			case 1:
+				g_DBBF.TextColor(P2_COLOR, BLACK);
+				break;
+
+			case 2:
+				g_DBBF.TextColor(P3_COLOR, BLACK);
+				break;
+
+			case 3:
+				g_DBBF.TextColor(P4_COLOR, BLACK);
+				break;
+			}
+			m_Player[i].Print_PlayerInfo();
+		}
+		
+		/// 노래 재생 끝났으면 다른 음악으로 재생
+		FMOD_Channel_IsPlaying(BGM_Channel[iCurBGM], &bSoundPlaying);
+		if (bSoundPlaying == FALSE)
+		{
+			iCurBGM = (rand() % 4) + 1;
+			FMOD_System_PlaySound(g_System, BGM_Music[iCurBGM], NULL, FALSE, &BGM_Channel[iCurBGM]);	// 브금 재생
 		}
 
-		m_DBBF.FlippingBuffer();	// 버퍼를 바꿔준다(더블버퍼링)
+		g_DBBF.FlippingBuffer();	// 버퍼를 바꿔준다(더블버퍼링)
 		Sleep(200);
 	}
 }
@@ -190,12 +270,12 @@ void CGame::Print_Tile(int x, int y) //게임 타일 출력  네모 1개.
 {
 	int iNext_Line = 0;	// 다음 줄
 
-	m_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"┌────────────────┐");
-	m_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
-	m_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
-	m_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
-	m_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
-	m_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"└────────────────┘");
+	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"┌────────────────┐");
+	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
+	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
+	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
+	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
+	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"└────────────────┘");
 }
 
 void CGame::MoveXY(int x, int y)
