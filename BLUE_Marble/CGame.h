@@ -1,10 +1,14 @@
+//CGame.h
 #pragma once
 #include "CDoubleBuffering.h"
 #include "CLand.h"
+#include "CPlayer.h"
 #define LAND_LINE_LEN 6	// 한 줄당 길이 
 #define TILE_HORIZONTAL_LEN 16	// 가로 길이
 #define TILE_VERTICAL_LEN 4	// 세로 길이
 #define TILE_DISTANCE 3	// 타일 간의 거리
+#define LAND_TEXT_VERTICAL 5
+#define LAND_TEXT_HORIZONTAL 6
 typedef enum
 {
 	LEFT,TOP, RIGHT,BOTTOM
@@ -14,9 +18,14 @@ class CGame
 private:
 	BOARD_LTRB eBoardLTRB = TOP;
 	CDoubleBuffering m_DBBF;	// 더블 버퍼링을 사용하기 위한 멤버 변수
+	CPlayer *m_Player;	// 2~4인을 동적 생성시킬 플레이어 포인터 멤버변수
+	CLand m_Lands[20];	// 땅의 정보 저장시킬 20개의 클래스
+						// Extran Lands 선언해야함
+
+	static int iPlayerNum;	// 플레이어 수
 
 	// 인트로에 나올 메시지
-	char IntroMessage[4096] =
+	TCHAR IntroMessage[4092] =
 		"====:*###*####*=========+#########************###**######+==+#+:...=+*====+******###**#########**###*======+###**####*+=======\n"
 		"====+##+===+###*++++++==###========+++=+=====+=+======+###*.*#####################*===+##*###*===+############====+####+======\n"
 		"===:*##+=++=##############+=++=+##################+=+==+###*#*##+++++++++++++++*##*=++=*#####*=+==++++++++++++=++++####*======\n"
@@ -39,17 +48,16 @@ private:
 		"===============================================+*################################################=============================\n"
 		"==================================================+*======++*********************************++===============================\n";
 private:
-	void gotoxy(int x, int y);
-	void Print_Game_Board();
-	void TextColor(int foreground, int background);
-	void Print_Tile(int x, int y);
-
-
+	void Print_Game_Board();	// 게임 판 전체를 출력하는 메서드
+	void TextColor(int foreground, int background);	// 텍스트 색상을 변경하는 메서드
+	void Print_Tile(int x, int y);	// 개별 타일을 출력하는 메서드
+	void Input_PlayerNum();	// 플레이어의 수를 입력받을 메서드
+	void PrintIntro();
+	void MoveXY(int x, int y);	// 더블버퍼링을 사용하지 않을 때 x, y 커서 움직이는 메서드
 public:
 	CGame();
 	~CGame();
 
-	void PrintIntro();
 	void PlayGame();
 };
 

@@ -43,7 +43,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -108,6 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreEmbeddedIDL>false</IgnoreEmbeddedIDL>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CDice.h" />
     <ClInclude Include="CDoubleBuffering.h" />
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CLand.h" />
@@ -156,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BLUE_Marble.cpp" />
+    <ClCompile Include="CDice.cpp" />
     <ClCompile Include="CDoubleBuffering.cpp" />
     <ClCompile Include="CGame.cpp" />
     <ClCompile Include="CLand.cpp" />

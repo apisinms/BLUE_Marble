@@ -5,6 +5,7 @@
 CDoubleBuffering::CDoubleBuffering() // 생성자에서 버퍼를 생성한다.
 {
 	CreatBuffer();
+	// 땅 정보 초기화
 }
 
 CDoubleBuffering::~CDoubleBuffering() // 소멸자에서 버퍼를 없앤다.
@@ -36,12 +37,12 @@ void CDoubleBuffering::CreatBuffer() // 버퍼생성용 메서드
 	SetConsoleCursorInfo(hBuffer[1], &cci);
 }
 
-void CDoubleBuffering::WriteBuffer(int x, int y, char str[]) // 버퍼에 내용을 쓰는 메서드
+void CDoubleBuffering::WriteBuffer(int x, int y, TCHAR str[]) // 버퍼에 내용을 쓰는 메서드
 {
 	DWORD dw;
-	COORD CursorPosition = { x, y };
-	SetConsoleCursorPosition(hBuffer[nScreenIndex], CursorPosition);
-	WriteFile(hBuffer[nScreenIndex], str, strlen(str), &dw, NULL);
+	gotoxy(x, y);
+
+	WriteFile(hBuffer[nScreenIndex], str, lstrlen(str), &dw, NULL);
 }
 
 void CDoubleBuffering::FlippingBuffer() // 버퍼를 0번과 1번으로 번갈아 가면서 보여주는 메서드
@@ -67,4 +68,13 @@ void CDoubleBuffering::TextColor(int foreground, int background)
 {
 	int color = foreground + background * 16;
 	SetConsoleTextAttribute(hBuffer[nScreenIndex], color);
+}
+
+void CDoubleBuffering::gotoxy(int x, int y)
+{
+	COORD pos;
+	pos.X = x;
+	pos.Y = y;
+	//SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+	SetConsoleCursorPosition(hBuffer[nScreenIndex], pos);
 }
