@@ -44,6 +44,10 @@ void CLand::Print_LandInfo()
 {
 	g_DBBF.WriteBuffer(pos.X, pos.Y, cLand_Name);
 }
+COORD CLand::Get_LandPosition()
+{
+	return pos;
+}
 
 //void CLand::Buy_Land(CPlayer &Player)
 //{

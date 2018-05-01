@@ -30,5 +30,6 @@ public:
 	void Arrive_Land(CPlayer &Player); // 땅에 도착 시.
 	void Sell_Land(CPlayer &Player);	// 땅 팔기
 	void Print_LandInfo();	// 땅 정보 출력
+	COORD Get_LandPosition();	// 땅 위치 리턴해주는 메서드
 };
 

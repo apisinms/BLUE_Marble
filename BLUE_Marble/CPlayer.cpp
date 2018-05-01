@@ -28,3 +28,16 @@ void CPlayer::Print_PlayerInfo()
 {
 	g_DBBF.WriteBuffer(pos.X, pos.Y, cPlayer_Shape);
 }
+
+ALL_LANDS CPlayer::Get_PlayerStandIndex()
+{
+	return eStand_idx;
+}
+
+void CPlayer::Move_PlayerPos(COORD pos, int iStand_Move)
+{
+	this->pos = pos;
+	this->eStand_idx = (ALL_LANDS)(iStand_Move + eStand_idx);
+}
+
+

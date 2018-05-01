@@ -28,18 +28,18 @@ CGame::CGame()
 		m_Lands[9].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"상파울로", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 21) - 5, 1);
 
 		// Right 땅들
-		m_Lands[10].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"로    마", 8, 3, 30, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 6));
-		m_Lands[11].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"제 네 바", 11, 5, 33, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 5) - 1);
+		m_Lands[10].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"프 라 하", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 2) - 4);
+		m_Lands[11].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"베 를 린", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 3) - 3);
 		m_Lands[12].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"모스크바", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 4) - 2);
-		m_Lands[13].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"베 를 린", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 3) - 3);
-		m_Lands[14].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"프 라 하", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 2) - 4);
+		m_Lands[13].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"제 네 바", 11, 5, 33, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 5) - 1);
+		m_Lands[14].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"로    마", 8, 3, 30, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 6));
 
 		// Bottom 땅들
-		m_Lands[15].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"서    울", 8, 3, 30, 0, (LAND_TEXT_VERTICAL * 5) - 1, (LAND_TEXT_HORIZONTAL * 7) + 1);
-		m_Lands[16].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"뉴    욕", 11, 5, 33, 0, (LAND_TEXT_VERTICAL * 9) - 2, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[15].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"평    양", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 21) - 5, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[16].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"런    던", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 17) - 4, (LAND_TEXT_HORIZONTAL * 7) + 1);
 		m_Lands[17].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"파    리", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 13) - 3, (LAND_TEXT_HORIZONTAL * 7) + 1);
-		m_Lands[18].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"런    던", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 17) - 4, (LAND_TEXT_HORIZONTAL * 7) + 1);
-		m_Lands[19].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"평    양", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 21) - 5, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[18].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"뉴    욕", 11, 5, 33, 0, (LAND_TEXT_VERTICAL * 9) - 2, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[19].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"서    울", 8, 3, 30, 0, (LAND_TEXT_VERTICAL * 5) - 1, (LAND_TEXT_HORIZONTAL * 7) + 1);
 	}
 
 	///ExtranLands에 대한 정보를 초기화 한다.
@@ -50,15 +50,22 @@ CGame::CGame()
 		m_ExtranLands[3].Set_LandInfo((TCHAR *)"황금열쇠", (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 7) + 1);
 	}
 	
-	FMOD_System_Create(&g_System);	// 객체 생성
-	FMOD_System_Init(g_System, 32, FMOD_INIT_NORMAL, NULL);	//초기화
-	FMOD_System_CreateSound(g_System, "Sounds\\Intro.mp3", FMOD_LOOP_NORMAL, 0, &BGM_Music[INTRO]);
-	
-	char location[30];
-	for (int i = 0; i < 4; i++)
+
+	/// 사운드에 관한 정보를 초기화 한다.
 	{
-		wsprintf(location, "Sounds\\GamePlay%d.mp3", i + 1);
-		FMOD_System_CreateSound(g_System, location, FMOD_DEFAULT, 0, &BGM_Music[BGM1+i]);
+		// 사운드 시스템 초기화
+		FMOD_System_Create(&g_System);	// 객체 생성
+		FMOD_System_Init(g_System, 32, FMOD_INIT_NORMAL, NULL);	//초기화
+
+		// 사운드 셋팅
+		FMOD_System_CreateSound(g_System, "Sounds\\Intro.mp3", FMOD_LOOP_NORMAL, 0, &BGM_Music[INTRO]);
+		FMOD_System_CreateSound(g_System, "Sounds\\InputPlayer.mp3", FMOD_LOOP_NORMAL, 0, &BGM_Music[INPUTPLAYER]);
+		char location[30];
+		for (int i = 0; i < 4; i++)
+		{
+			wsprintf(location, "Sounds\\GamePlay%d.mp3", i + 1);
+			FMOD_System_CreateSound(g_System, location, FMOD_DEFAULT, 0, &BGM_Music[BGM1 + i]);
+		}
 	}
 }
 
@@ -79,6 +86,7 @@ void CGame::PlayGame()
 void CGame::PrintIntro()
 {
 	FMOD_System_PlaySound(g_System, BGM_Music[INTRO], NULL, FALSE, &BGM_Channel[INTRO]);	// 브금 재생
+	FMOD_Channel_SetVolume(BGM_Channel[INTRO], 0.5f);
 
 	int x, y;
 	x = 50;
@@ -114,6 +122,9 @@ void CGame::PrintIntro()
 void CGame::Input_PlayerNum()	// 플레이어의 수를 입력받는다
 {
 	int num = 0;
+	FMOD_Channel_Stop(BGM_Channel[INTRO]);
+	FMOD_System_PlaySound(g_System, BGM_Music[INPUTPLAYER], NULL, FALSE, &BGM_Channel[INPUTPLAYER]);	// 브금 재생
+	FMOD_Channel_SetVolume(BGM_Channel[INPUTPLAYER], 0.5f);
 	SetConsoleActiveScreenBuffer(GetStdHandle(STD_OUTPUT_HANDLE));	// 현재 스크린으로 적용(더블버퍼링 x)
 
 	while (true)
@@ -146,9 +157,15 @@ void CGame::Input_PlayerNum()	// 플레이어의 수를 입력받는다
 					m_Player[3].Set_PlayerInfo((TCHAR *)"♣", (LAND_TEXT_VERTICAL + P4_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3);
 			}
 			
-			FMOD_Channel_Stop(BGM_Channel[INTRO]);
-			iCurBGM = (rand() % 4) + 1;
+			while (true)
+			{
+				iCurBGM = rand() % BGM4;
+				if (iCurBGM != INTRO && iCurBGM != INPUTPLAYER)
+					break;
+			}
+			FMOD_Channel_Stop(BGM_Channel[INPUTPLAYER]);
 			FMOD_System_PlaySound(g_System, BGM_Music[iCurBGM], NULL, FALSE, &BGM_Channel[iCurBGM]);	// 브금 재생
+			FMOD_Channel_SetVolume(BGM_Channel[iCurBGM], 0.5f);
 			break;
 		}
 	}
@@ -174,91 +191,169 @@ void CGame::Print_Game_Board()
 		g_DBBF.ClearBuffer();	// 이전 버퍼의 내용을 모두 지워준다.
 
 		/// 너비와 높이에 맞게 계산하여 타일을 출력한다.
-		for (eBoardLTRB = LEFT, i = 0; i < 4;)
 		{
-			for (j = 0; j < LAND_LINE_LEN; j++)
+			for (eBoardLTRB = LEFT, i = 0; i < 4;)
 			{
-				switch (eBoardLTRB)
+				for (j = 0; j < LAND_LINE_LEN; j++)
 				{
-				case LEFT:	// o
-					g_DBBF.TextColor(LIGHTGREEN, BLACK);
+					switch (eBoardLTRB)
+					{
+					case LEFT:	// o
+						g_DBBF.TextColor(LIGHTGREEN, BLACK);
 
-					if (j == 0)
-						g_DBBF.TextColor(YELLOW, BLACK);
+						if (j == 0)
+							g_DBBF.TextColor(YELLOW, BLACK);
 
-					Print_Tile(0, j * (TILE_VERTICAL_LEN + TILE_DISTANCE));
-					break;
+						Print_Tile(0, j * (TILE_VERTICAL_LEN + TILE_DISTANCE));
+						break;
 
-				case TOP:
-					g_DBBF.TextColor(LIGHTBLUE, BLACK);
+					case TOP:
+						g_DBBF.TextColor(LIGHTBLUE, BLACK);
 
-					if (j == LAND_LINE_LEN - 1)
-						g_DBBF.TextColor(YELLOW, BLACK);
+						if (j == LAND_LINE_LEN - 1)
+							g_DBBF.TextColor(YELLOW, BLACK);
 
-					Print_Tile((j * (TILE_HORIZONTAL_LEN + TILE_DISTANCE)) + (TILE_HORIZONTAL_LEN + TILE_DISTANCE), 0);
-					break;
+						Print_Tile((j * (TILE_HORIZONTAL_LEN + TILE_DISTANCE)) + (TILE_HORIZONTAL_LEN + TILE_DISTANCE), 0);
+						break;
 
-				case RIGHT:
-					g_DBBF.TextColor(LIGHTMAGENTA, BLACK);
+					case RIGHT:
+						g_DBBF.TextColor(LIGHTMAGENTA, BLACK);
 
-					if (j == LAND_LINE_LEN - 1)
-						g_DBBF.TextColor(YELLOW, BLACK);
+						if (j == LAND_LINE_LEN - 1)
+							g_DBBF.TextColor(YELLOW, BLACK);
 
-					Print_Tile((TILE_HORIZONTAL_LEN * (LAND_LINE_LEN + 1)) + (TILE_DISTANCE - 1), (j * (TILE_VERTICAL_LEN + TILE_DISTANCE)) + (TILE_VERTICAL_LEN + TILE_DISTANCE));
-					break;
+						Print_Tile((TILE_HORIZONTAL_LEN * (LAND_LINE_LEN + 1)) + (TILE_DISTANCE - 1), (j * (TILE_VERTICAL_LEN + TILE_DISTANCE)) + (TILE_VERTICAL_LEN + TILE_DISTANCE));
+						break;
 
-				case BOTTOM:
-					g_DBBF.TextColor(LIGHTRED, BLACK);
+					case BOTTOM:
+						g_DBBF.TextColor(LIGHTRED, BLACK);
 
-					if (j == 0)
-						g_DBBF.TextColor(YELLOW, BLACK);
+						if (j == 0)
+							g_DBBF.TextColor(YELLOW, BLACK);
 
-					Print_Tile(j * (TILE_HORIZONTAL_LEN + TILE_DISTANCE), (TILE_VERTICAL_LEN + TILE_DISTANCE) * LAND_LINE_LEN);
-					break;
+						Print_Tile(j * (TILE_HORIZONTAL_LEN + TILE_DISTANCE), (TILE_VERTICAL_LEN + TILE_DISTANCE) * LAND_LINE_LEN);
+						break;
+					}
+				}
+				eBoardLTRB = (BOARD_LTRB)++i;
+			}
+		}
+
+		/// 땅 + 특수 땅 정보 출력
+		{
+			// 땅 정보를 출력한다.
+			g_DBBF.TextColor(WHITE, BLACK);
+			for (int i = 0; i < 20; i++)
+				m_Lands[i].Print_LandInfo();
+
+			// 특수 땅 정보를 출력한다
+			g_DBBF.TextColor(BROWN, BLACK);
+			for (int i = 0; i < 4; i++)
+				m_ExtranLands[i].Print_LandInfo();
+		}
+
+		/// 주사위 출력 및 주사위 굴리기
+		{
+			while (true)
+			{
+				if (_kbhit())
+				{
+					int iKey = _getch();
+					if (iKey == ' ')
+					{
+						BOOL bIsDouble = FALSE;	// 더블이냐?
+						int iDice_Result = m_Dice.Throw_Dice(DICE_POS_X, DICE_POS_Y, &bIsDouble);	// 주사위 굴린 결과를 얻어옴
+						ALL_LANDS ePlayerStand_Idx = m_Player[eCurPlayer].Get_PlayerStandIndex();	// 주사위 굴린 결과 값 + 플레이어가 밟고있는 땅 인덱스
+
+						ePlayerStand_Idx = (ALL_LANDS)(iDice_Result + ePlayerStand_Idx);	// 현재 밟은 땅 + 주사위 눈 더한 값
+
+						if (iDice_Result + ePlayerStand_Idx > SEOUL_LAND)	// 더한 결과값이 땅의 마지막인 Seoul을 넘어간다면
+							ePlayerStand_Idx = (ALL_LANDS)(ePlayerStand_Idx - SEOUL_LAND);	// 23을 넘어가지 않게 조정해준다.
+
+						COORD cLandPos = m_Lands[ePlayerStand_Idx].Get_LandPosition();
+						int AddPos = 0;
+						switch (eCurPlayer)
+						{
+						case P1:
+							AddPos = P1_POS;
+							break;
+
+						case P2:
+							AddPos = P2_POS;
+							break;
+
+						case P3:
+							AddPos = P3_POS;
+							break;
+
+						case P4:
+							AddPos = P4_POS;
+							break;
+						}
+						cLandPos.X = (cLandPos.X + AddPos) - 2;
+						cLandPos.Y += 3;
+
+						m_Player[eCurPlayer].Move_PlayerPos(cLandPos, ePlayerStand_Idx);
+
+						if (bIsDouble == FALSE)
+						{
+							if (eCurPlayer == (iPlayerNum - 1))
+								eCurPlayer = P1;
+
+							else
+								eCurPlayer = (eCURPLAYER)(eCurPlayer + 1);	// 다음 플레이어로
+						}
+
+						else // 더블이면
+						{
+							eCurPlayer = eCurPlayer;	// 한 번 더!
+						}
+
+						m_Dice.Print_Diceinfo();
+						break;
+					}
 				}
 			}
-			eBoardLTRB = (BOARD_LTRB)++i;
 		}
 
-		// 땅 정보를 출력한다.
-		g_DBBF.TextColor(WHITE, BLACK);
-		for (int i = 0; i < 20; i++)
-			m_Lands[i].Print_LandInfo();
-
-		// 특수 땅 정보를 출력한다
-		g_DBBF.TextColor(BROWN, BLACK);
-		for (int i = 0; i < 4; i++)
-			m_ExtranLands[i].Print_LandInfo();
-
-		for (int i = 0; i < iPlayerNum; i++)
+		/// 플레이어 캐릭터 출력
 		{
-			switch (i)
+			for (int i = 0; i < iPlayerNum; i++)
 			{
-			case 0:
-				g_DBBF.TextColor(P1_COLOR, BLACK);
-				break;
+				switch (i)
+				{
+				case P1:
+					g_DBBF.TextColor(P1_COLOR, BLACK);
+					break;
 
-			case 1:
-				g_DBBF.TextColor(P2_COLOR, BLACK);
-				break;
+				case P2:
+					g_DBBF.TextColor(P2_COLOR, BLACK);
+					break;
 
-			case 2:
-				g_DBBF.TextColor(P3_COLOR, BLACK);
-				break;
+				case P3:
+					g_DBBF.TextColor(P3_COLOR, BLACK);
+					break;
 
-			case 3:
-				g_DBBF.TextColor(P4_COLOR, BLACK);
-				break;
+				case P4:
+					g_DBBF.TextColor(P4_COLOR, BLACK);
+					break;
+				}
+				m_Player[i].Print_PlayerInfo();
 			}
-			m_Player[i].Print_PlayerInfo();
-		}
-		
-		/// 노래 재생 끝났으면 다른 음악으로 재생
-		FMOD_Channel_IsPlaying(BGM_Channel[iCurBGM], &bSoundPlaying);
-		if (bSoundPlaying == FALSE)
-		{
-			iCurBGM = (rand() % 4) + 1;
-			FMOD_System_PlaySound(g_System, BGM_Music[iCurBGM], NULL, FALSE, &BGM_Channel[iCurBGM]);	// 브금 재생
+
+			/// 노래 재생 끝났으면 다른 음악으로 재생
+			FMOD_Channel_IsPlaying(BGM_Channel[iCurBGM], &bSoundPlaying);
+			if (bSoundPlaying == FALSE)
+			{
+				while (true)
+				{
+					iCurBGM = rand() % BGM4;
+					if (iCurBGM != INTRO && iCurBGM != INPUTPLAYER)
+						break;
+				}
+				FMOD_System_PlaySound(g_System, BGM_Music[iCurBGM], NULL, FALSE, &BGM_Channel[iCurBGM]);	// 브금 재생
+				FMOD_Channel_SetVolume(BGM_Channel[iCurBGM], 0.5f);
+			}
 		}
 
 		g_DBBF.FlippingBuffer();	// 버퍼를 바꿔준다(더블버퍼링)
