@@ -1,8 +1,6 @@
 //CLand.cpp
 #include "stdafx.h"
 #include "CLand.h"
-#include "CPlayer.h"
-#include "CDoubleBuffering.h"
 
 CLand::CLand()
 {

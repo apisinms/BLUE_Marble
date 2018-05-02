@@ -1,7 +1,8 @@
-#pragma once
-#include "stdafx.h"
-#include "CLand.h"
-#include "CDoubleBuffering.h"
+#ifndef __CPLAYER__
+#define __CPLAYER__
+//#include "stdafx.h"
+//#include "CLand.h"
+//#include "CDoubleBuffering.h"
 
 class CLand;
 class CPlayer
@@ -24,4 +25,4 @@ public:
 
 	int iDiceDoubleCnt = 0;	// ´õºí È½¼ö
 };
-
+#endif

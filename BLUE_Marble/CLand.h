@@ -1,10 +1,10 @@
-// CLand.h
-#pragma once
+#ifndef __CLAND__
+#define __CLAND__
 #pragma warning(disable : 4996)
 #define EMPTY_BUILD  0 // 건물개수
 #define MAX_BUILD 3 // 최대 건물 수
-#include"CPlayer.h"
-#include "CDoubleBuffering.h"
+//#include"CPlayer.h"
+//#include "CDoubleBuffering.h"
 class CPlayer;
 class CLand
 {
@@ -32,4 +32,4 @@ public:
 	void Print_LandInfo();	// 땅 정보 출력
 	COORD Get_LandPosition();	// 땅 위치 리턴해주는 메서드
 };
-
+#endif

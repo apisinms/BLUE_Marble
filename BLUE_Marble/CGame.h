@@ -1,11 +1,9 @@
-//CGame.h
-#pragma once
-#include "CDoubleBuffering.h"
+#ifndef __CGAME
+#define __CGAME
 #include "CLand.h"
 #include "CExtraLand.h"
 #include "CPlayer.h"
 #include "CDice.h"
-#include <fmod.h>
 #define LAND_LINE_LEN 6	// 한 줄당 길이 
 #define TILE_HORIZONTAL_LEN 16	// 가로 길이
 #define TILE_VERTICAL_LEN 4	// 세로 길이
@@ -23,13 +21,10 @@ typedef enum
 {
 	P1,P2,P3,P4,NONE
 }eCURPLAYER;
-enum
-{
-	INTRO,INPUTPLAYER,BGM1,BGM2,BGM3,BGM4
-};
+
 class CGame
 {
-
+	friend CDice;
 private:
 	BOARD_LTRB eBoardLTRB = TOP;
 	CDoubleBuffering m_DBBF;	// 더블 버퍼링을 사용하기 위한 멤버 변수
@@ -43,13 +38,12 @@ private:
 
 	eCURPLAYER eCurPlayer = P1;	// 현재 주사위 굴려야하는 플레이어
 
-	FMOD_SYSTEM *g_System;	// FMOD System 변수 선언
 	FMOD_SOUND *BGM_Music[MAX_BGM];
 	FMOD_CHANNEL *BGM_Channel[MAX_BGM];
 
 	// 인트로에 나올 메시지
 	TCHAR IntroMessage[4096] =
-	    TEXT("                                  ====:*###*####*=========+#########************###**######+==+#+:...=+*====+******###**#########**###*======+###**####*+=======\n")
+		TEXT("                                  ====:*###*####*=========+#########************###**######+==+#+:...=+*====+******###**#########**###*======+###**####*+=======\n")
 		TEXT("                                  ====+##+===+###*++++++==###========+++=+=====+=+======+###*.*#####################*===+##*###*===+############====+####+======\n")
 		TEXT("                                  ===:*##+=++=##############+=++=+##################+=+==+###*#*##+++++++++++++++*##*=++=*#####*=+==++++++++++++=++++####*======\n")
 		TEXT("                                  ===:*##+=++=#*##+===++####+=++=###################*=+++=##*####+=+==+*****+=+==*##*=++=*#####*=++=************+++++####*======\n")
@@ -83,12 +77,16 @@ private:
 	void MoveXY(int x, int y);	// 더블버퍼링을 사용하지 않을 때 x, y 커서 움직이는 메서드
 	void TextColor(int foreground, int background);	// 텍스트 색상을 변경하는 메서드
 	void Check_BGM();	// 음악 꺼졌는지 확인하고 꺼졌으면 다시 켜줌
-	void RePaint();
+	void RePaint();	// 전체 다시 그리기
+	void Print_Dice_Gage();	// 주사위 게이지 그리기(전체 관장)
+
 
 public:
 	CGame();
 	~CGame();
 
 	void PlayGame();
+	void PlayFX(int idx);
 };
 
+#endif

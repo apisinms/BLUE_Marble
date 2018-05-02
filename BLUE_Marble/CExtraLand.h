@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __CEXTRALAND__
+#define __CEXTRALAND__
 #include "CPlayer.h"
 class CExtraLand
 {
@@ -13,4 +14,4 @@ public:
 	void Set_LandInfo(TCHAR *cLand_Name, int x, int y);
 	COORD Get_LandPosition();
 };
-
+#endif

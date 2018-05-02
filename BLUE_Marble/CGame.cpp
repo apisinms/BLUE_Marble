@@ -7,6 +7,8 @@
 
 
 CDoubleBuffering g_DBBF;	// 이제 진짜로 정의를 한다(객체가 할당된다)
+FMOD_SYSTEM *g_System;	// FMOD System 정의
+FMOD_SOUND *g_FX_Sound[MAX_FX];	// 효과음을 전역으로
 CGame::CGame()
 {
 	srand((unsigned int)time(NULL));	// 난수 심음
@@ -58,15 +60,35 @@ CGame::CGame()
 		FMOD_System_Create(&g_System);	// 객체 생성
 		FMOD_System_Init(g_System, 32, FMOD_INIT_NORMAL, NULL);	//초기화
 
-		// 사운드 셋팅
-		FMOD_System_CreateSound(g_System, "Sounds\\Intro.mp3", FMOD_LOOP_NORMAL, 0, &BGM_Music[INTRO]);
-		FMOD_System_CreateSound(g_System, "Sounds\\InputPlayer.mp3", FMOD_LOOP_NORMAL, 0, &BGM_Music[INPUTPLAYER]);
-		char location[30];
+		/// 사운드 셋팅 BGM
+		FMOD_System_CreateSound(g_System, "Sounds\\BGM\\BGM_Intro.mp3", FMOD_LOOP_NORMAL, 0, &BGM_Music[INTRO]);
+		FMOD_System_CreateSound(g_System, "Sounds\\BGM\\BGM_InputPlayer.mp3", FMOD_LOOP_NORMAL, 0, &BGM_Music[INPUTPLAYER]);
+		
+		char location[100];
 		for (int i = 0; i < 4; i++)
 		{
-			wsprintf(location, "Sounds\\GamePlay%d.mp3", i + 1);
+			wsprintf(location, TEXT("Sounds\\BGM\\BGM_GamePlay%d.mp3"), i + 1);
 			FMOD_System_CreateSound(g_System, location, FMOD_DEFAULT, 0, &BGM_Music[BGM1 + i]);
 		}
+
+
+		/// 사운드 셋팅 효과음
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_MonthPay.wav", FMOD_DEFAULT, 0, &g_FX_Sound[FX_MONTH_PAY]);
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_IslandArrive.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_ISLAND_ARRIVE]);
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_WorldTripArrive.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_WORLDTRIP_ARRIVE]);
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_GoldKeyArrive.wav", FMOD_DEFAULT, 0, &g_FX_Sound[FX_GOLDKEY_ARRIVE]);
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_PlayerMove.wav", FMOD_DEFAULT, 0, &g_FX_Sound[FX_PLAYER_MOVE]);
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_Build.wav", FMOD_DEFAULT, 0, &g_FX_Sound[FX_BUILD]);
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_ThrowDice.wav", FMOD_DEFAULT, 0, &g_FX_Sound[FX_THROW_DICE]);
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_Win.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_WIN]);
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_Double.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_DICE_DOUBLE]);
+
+		for (int i = 0; i < 12; i++)
+		{
+			wsprintf(location, TEXT("Sounds\\FX\\FX_DiceNum_%d.mp3"), i + 1);
+			FMOD_System_CreateSound(g_System, location, FMOD_DEFAULT, 0, &g_FX_Sound[FX_DICENUM1 + i]);
+		}
+
 	}
 }
 
@@ -198,7 +220,10 @@ void CGame::Print_Game_Board()
 		Print_All_ExtraLand();
 
 		/// 주사위 출력 및 주사위 굴리기
-		Print_Dice_Result(&bPrintCharacter);
+		m_Dice.Dice_Proc(*this);
+		//m_Dice.Print_Diceinfo();
+		//Print_Dice_Gage();	// 주사위 게이지 출력
+		//Print_Dice_Result(&bPrintCharacter);
 
 		/// 캐릭터 정보 출력(주사위 던지지지 않았을 때만, 주사위 던질 때는 Dice에서 알아서 처리하니까)
 		if (bPrintCharacter == TRUE)
@@ -335,204 +360,134 @@ void CGame::Print_Dice_Result(BOOL *bPrintCharacter)
 	BOOL bIsDouble;	// 더블이냐?
 	COORD cLandPos;	// 플레이어가 움직여야 할 땅의 포지션
 	ALL_LANDS ePlayerStand_Idx;	// 현재 플레이어가 밟고 있는 인덱스(Land + ExtraLand)
-	int iKey;	// 키 입력
 	int iDice_Result;	// 주사위 결과
 	int AddPos;	// 각 플레이어마다 더해줘야 할 좌표값
 	int iHaveToGo_Idx = 0;	// 가야되는 인덱스
 
 
-	//int iPower = -1;
-	//bool bUpdown = false;
-	//int iKey;	// 키 입력
 
-	//if (_kbhit())
-	//{
-	//	iKey = _getch();
-	//	if (iKey == ' ')
-	//	{
-	//		while (true)
-	//		{
-	//			if (_kbhit())
-	//			{
-	//				iKey = _getch();
-	//				if (iKey == ENTER)
-	//				{
-	//					RePaint();
-	//					return;
-	//				}
-	//			}
-	//			g_DBBF.ClearBuffer();
-	//			if (bUpdown == 0 && iPower < 9) //파워가 계속 와리가리 1부터9
-	//			{
-	//				iPower++;
-	//				if (iPower == 9) //9가되면
-	//					bUpdown = true; //최대치이다
-	//			}
-	//			else if (bUpdown == true && iPower > 0)
-	//			{
-	//				iPower--;
-	//				if (iPower == 0)  //파워가 0이면
-	//					bUpdown = false;  //최소치이다.
-	//			}
+	bIsDouble = FALSE;
+	iDice_Result = m_Dice.Throw_Dice(DICE_POS_X, DICE_POS_Y, &bIsDouble);	// 주사위 굴린 결과를 얻어옴
+	ePlayerStand_Idx = m_Player[eCurPlayer].Get_PlayerStandIndex();	// 플레이어가 밟고있는 땅 인덱스
 
+	m_Dice.Print_Diceinfo();
 
-
-	//			Print_All_Tile();
-	//			Print_All_Land();
-	//			Print_All_ExtraLand();
-	//			Print_All_Character();
-
-
-	//			if (bUpdown == false)
-	//			{
-	//				TextColor(RED, RED);
-	//				g_DBBF.WriteBuffer(50 + (iPower * 2), 30, (TCHAR *)"■■");
-	//			}
-	//			else
-	//			{
-	//				TextColor(BLACK, WHITE);
-	//				g_DBBF.WriteBuffer(50 + (iPower * 2), 30, (TCHAR *)"■■");
-	//			}
-	//			TextColor(BLACK, WHITE);
-	//			Sleep(60);
-	//			g_DBBF.WriteBuffer(50, 30, (TCHAR *)"         ");
-
-	//			g_DBBF.FlippingBuffer();
-	//		}
-	//	}
-	//}
-
-
-	if (_kbhit())
+	if (m_Player[eCurPlayer].iDiceDoubleCnt >= MAX_DOUBLE) // 최대 더블 횟수 넘어가면
 	{
-		iKey = _getch();
-		if (iKey == ' ')
-		{
-			bIsDouble = FALSE;
-			iDice_Result = m_Dice.Throw_Dice(DICE_POS_X, DICE_POS_Y, &bIsDouble);	// 주사위 굴린 결과를 얻어옴
-			ePlayerStand_Idx = m_Player[eCurPlayer].Get_PlayerStandIndex();	// 플레이어가 밟고있는 땅 인덱스
+		m_Player[eCurPlayer].iDiceDoubleCnt = 0;	// 더블 횟수 0으로
+		/// 무인도 위치를 얻어와서 지금 플레이어를 무인도로 보내버림
+		cLandPos = m_ExtranLands[1].Get_LandPosition();
+		AddPos = P1_POS * (eCurPlayer + 1);
+		cLandPos.X = (cLandPos.X + AddPos) - 2;
+		cLandPos.Y += 2;
+		m_Player[eCurPlayer].Move_PlayerPos(cLandPos);
+		m_Player[eCurPlayer].Set_PlayerStandIndex(ISLAND_LAND);
+		RePaint();
 
-			m_Dice.Print_Diceinfo();
+		/// 다음 플레이어로
+		if (eCurPlayer == (iPlayerNum - 1))
+			eCurPlayer = P1;
 
-		if(m_Player[eCurPlayer].iDiceDoubleCnt >= MAX_DOUBLE) // 최대 더블 횟수 넘어가면
+		else
+			eCurPlayer = (eCURPLAYER)(eCurPlayer + 1);
+
+		*bPrintCharacter = FALSE;	// 캐릭터를 다시 그리지 않게 한다.
+		return;
+	}
+
+	int Land_Diff = 0;	// ExtraLand랑 Land의 차이를 빼주려고
+	iHaveToGo_Idx = (ALL_LANDS)(iDice_Result + ePlayerStand_Idx);	// 가야할 땅 = 현재 밟은 땅 + 주사위 눈 더한 값
+
+
+	for (int i = ePlayerStand_Idx + 1; i <= iHaveToGo_Idx; i++)
+	{
+		g_DBBF.ClearBuffer();
+
+		// 인덱스로 현재 땅의 위치를 조사해서 ExtraLand와 Land의 차이를 빼준다.
+		if (i > START_LAND)
+			Land_Diff = 1;
+
+		if (i > ISLAND_LAND)
+			Land_Diff = 2;
+
+		if (i > WORLDTRIP_LAND)
+			Land_Diff = 3;
+
+		if (i > GOLDKEY_LAND)
+			Land_Diff = 4;
+
+		// 밟은 땅의 위치정보를 얻어온다.
+		switch (i)
 		{
-			m_Player[eCurPlayer].iDiceDoubleCnt = 0;	// 더블 횟수 0으로
-			/// 무인도 위치를 얻어와서 지금 플레이어를 무인도로 보내버림
+		case START_LAND:	// 출발점
+			cLandPos = m_ExtranLands[0].Get_LandPosition();
+			break;
+
+		case ISLAND_LAND:	// 무인도
 			cLandPos = m_ExtranLands[1].Get_LandPosition();
-			AddPos = P1_POS * (eCurPlayer + 1);
-			cLandPos.X = (cLandPos.X + AddPos) - 2;
-			cLandPos.Y += 2;
-			m_Player[eCurPlayer].Move_PlayerPos(cLandPos);
-			m_Player[eCurPlayer].Set_PlayerStandIndex(ISLAND_LAND);
-			RePaint();
+			break;
 
-			/// 다음 플레이어로
-			if (eCurPlayer == (iPlayerNum - 1))
-				eCurPlayer = P1;
+		case WORLDTRIP_LAND:	// 세계여행
+			cLandPos = m_ExtranLands[2].Get_LandPosition();
+			break;
 
-			else
-				eCurPlayer = (eCURPLAYER)(eCurPlayer + 1);
+		case GOLDKEY_LAND:	// 황금열쇠
+			cLandPos = m_ExtranLands[3].Get_LandPosition();
+			break;
 
-			*bPrintCharacter = FALSE;	// 캐릭터를 다시 그리지 않게 한다.
-			return;
+		default:
+			cLandPos = m_Lands[i - Land_Diff].Get_LandPosition();	// 현재 플레이어가 밟고 있는 땅의 좌표값을 얻어온다.
+			break;
 		}
 
-		int Land_Diff = 0;	// ExtraLand랑 Land의 차이를 빼주려고
-		iHaveToGo_Idx = (ALL_LANDS)(iDice_Result + ePlayerStand_Idx);	// 가야할 땅 = 현재 밟은 땅 + 주사위 눈 더한 값
+		AddPos = P1_POS * (eCurPlayer + 1);	// 플레이어가 지정되어야 하는 위치에 맞게 좌표를 수정해주기 위해서
+
+		cLandPos.X = (cLandPos.X + AddPos) - 2;
+		cLandPos.Y += 2;
+
+		m_Player[eCurPlayer].Move_PlayerPos(cLandPos);
+
+		/// 사각 타일 + 땅 + 특수 땅 + 캐릭터 출력
+		Print_All_Tile();
+		Print_All_Land();
+		Print_All_ExtraLand();
+		Print_All_Character();
+
+		Sleep(200);
+		g_DBBF.FlippingBuffer();
 
 
-			for (int i = ePlayerStand_Idx + 1; i <= iHaveToGo_Idx; i++)
-			{
-				g_DBBF.ClearBuffer();
+		if (i == SEOUL_LAND)	// 인덱스가 맵 끝지점에 도달하면 빼준다.
+		{
+			iHaveToGo_Idx -= SEOUL_LAND;
+			i = START_LAND - 1;
+		}
+	}	// End For State
 
-				// 인덱스로 현재 땅의 위치를 조사해서 ExtraLand와 Land의 차이를 빼준다.
-				if (i > START_LAND)
-					Land_Diff = 1;
+	// 마지막엔 화면이 Clear가 안되기 때문에 한번 더 그려줘야 한다.
+	RePaint();
 
-				if (i > ISLAND_LAND)
-					Land_Diff = 2;
-
-				if (i > WORLDTRIP_LAND)
-					Land_Diff = 3;
-
-				if (i > GOLDKEY_LAND)
-					Land_Diff = 4;
-
-				// 밟은 땅의 위치정보를 얻어온다.
-				switch (i)
-				{
-				case START_LAND:	// 출발점
-					cLandPos = m_ExtranLands[0].Get_LandPosition();
-					break;
-
-				case ISLAND_LAND:	// 무인도
-					cLandPos = m_ExtranLands[1].Get_LandPosition();
-					break;
-
-				case WORLDTRIP_LAND:	// 세계여행
-					cLandPos = m_ExtranLands[2].Get_LandPosition();
-					break;
-
-				case GOLDKEY_LAND:	// 황금열쇠
-					cLandPos = m_ExtranLands[3].Get_LandPosition();
-					break;
-
-				default:
-					cLandPos = m_Lands[i - Land_Diff].Get_LandPosition();	// 현재 플레이어가 밟고 있는 땅의 좌표값을 얻어온다.
-					break;
-				}
-
-				AddPos = P1_POS * (eCurPlayer + 1);	// 플레이어가 지정되어야 하는 위치에 맞게 좌표를 수정해주기 위해서
-
-				cLandPos.X = (cLandPos.X + AddPos) - 2;
-				cLandPos.Y += 2;
-
-				m_Player[eCurPlayer].Move_PlayerPos(cLandPos);
-
-				/// 사각 타일 + 땅 + 특수 땅 + 캐릭터 출력
-				Print_All_Tile();
-				Print_All_Land();
-				Print_All_ExtraLand();
-				Print_All_Character();
-
-				Sleep(200);
-				g_DBBF.FlippingBuffer();
+	m_Player[eCurPlayer].Set_PlayerStandIndex((ALL_LANDS)iHaveToGo_Idx);	// 최종 플레이어가 간 땅의 위치를 저장시킴
 
 
-				if (i == SEOUL_LAND)	// 인덱스가 맵 끝지점에 도달하면 빼준다.
-				{
-					iHaveToGo_Idx -= SEOUL_LAND;
-					i = START_LAND - 1;
-				}
-			}	// End For State
-			
-			// 마지막엔 화면이 Clear가 안되기 때문에 한번 더 그려줘야 한다.
-			RePaint();
-			
-			m_Player[eCurPlayer].Set_PlayerStandIndex((ALL_LANDS)iHaveToGo_Idx);	// 최종 플레이어가 간 땅의 위치를 저장시킴
+	if (bIsDouble == FALSE)
+	{
+		if (eCurPlayer == (iPlayerNum - 1))
+			eCurPlayer = P1;
 
+		else
+			eCurPlayer = (eCURPLAYER)(eCurPlayer + 1);	// 다음 플레이어로
+	}
 
-			if (bIsDouble == FALSE)
-			{
-				if (eCurPlayer == (iPlayerNum - 1))
-					eCurPlayer = P1;
-
-				else
-					eCurPlayer = (eCURPLAYER)(eCurPlayer + 1);	// 다음 플레이어로
-			}
-
-			else // 더블이면
-			{
-				if (m_Player[eCurPlayer].iDiceDoubleCnt < MAX_DOUBLE)	// 최대 더블 횟수까지는 가능
-				{
-					m_Player[eCurPlayer].iDiceDoubleCnt++;
-					eCurPlayer = eCurPlayer;	// 한 번 더!
-				}
-			}
+	else // 더블이면
+	{
+		if (m_Player[eCurPlayer].iDiceDoubleCnt < MAX_DOUBLE)	// 최대 더블 횟수까지는 가능
+		{
+			m_Player[eCurPlayer].iDiceDoubleCnt++;
+			eCurPlayer = eCurPlayer;	// 한 번 더!
 		}
 	}
 }
-
 void CGame::Check_BGM()
 {
 	FMOD_BOOL bSoundPlaying = TRUE;
@@ -558,6 +513,123 @@ void CGame::RePaint()
 	Print_All_Land();
 	Print_All_ExtraLand();
 	Print_All_Character();
+	m_Dice.Print_Diceinfo();
 	Sleep(300);
 	g_DBBF.FlippingBuffer();
+}
+
+void CGame::Print_Dice_Gage()
+{
+	int iPower = 0;
+	bool bUpdown = false;
+	int iKey;	// 키 입력
+	int iCnt = 0;	// 1번 버퍼, 2번 버퍼 둘 다 같은 화면으로 동기화하려면 2번을 진행해야 한다.
+
+	if (_kbhit())
+	{
+		iKey = _getch();
+		if (iKey == ' ')
+		{
+			while (true)
+			{
+
+				if (_kbhit())
+				{
+					iKey = _getch();
+					if (iKey == ' ')
+					{
+						/// 출력 도중 스페이스바가 눌리면 또 동기화를 해줘야 한다.(더럽지만 어쩔 수 없어, 메서드 만드는 게 더 더러움)
+						Sleep(600);
+
+						g_DBBF.TextColor(BLACK, BLACK);
+						for (int i = 0; i <= MAX_GAGE; i++)
+							g_DBBF.WriteBuffer(DICE_POS_X + 8 + i, DICE_POS_Y + 15, (TCHAR *)"  ");
+
+						return;
+					}
+				}
+
+
+				g_DBBF.ClearBuffer();
+
+
+				if (bUpdown == FALSE)
+				{
+					int i = 0;
+
+					g_DBBF.TextColor(RED, RED);
+					for (i = 0; i <= iPower; i++)
+						g_DBBF.WriteBuffer(DICE_POS_X + 8 + iPower, DICE_POS_Y + 15, (TCHAR *)"  ");
+					
+
+					g_DBBF.TextColor(BLACK, WHITE);
+					for (; i <= abs(MAX_GAGE - iPower); i++)
+						g_DBBF.WriteBuffer(DICE_POS_X + 8 + i, DICE_POS_Y + 15, (TCHAR *)"  ");
+
+				}
+
+
+				else
+				{
+					g_DBBF.TextColor(BLACK, WHITE);
+
+					for (int i = 0; i <= iPower; i++)
+						g_DBBF.WriteBuffer(DICE_POS_X + 8 + iPower, DICE_POS_Y + 15, (TCHAR *)"  ");
+				}
+
+				Sleep(1);
+
+				Print_All_Tile();
+				Print_All_Land();
+				Print_All_ExtraLand();
+				Print_All_Character();
+				m_Dice.Print_Diceinfo();
+
+				g_DBBF.FlippingBuffer();
+
+
+				if (bUpdown == FALSE && iPower < MAX_GAGE) //파워가 계속 와리가리 1부터9
+				{
+					iCnt++;
+					if (iCnt == 2)
+					{
+						iCnt = 0;
+						iPower++;
+					}
+
+					if (iPower == MAX_GAGE) //9가되면
+						bUpdown = true; //최대치이다
+				}
+				else if (bUpdown == TRUE && iPower > 0)
+				{
+					iCnt++;
+					if (iCnt == 2)
+					{
+						iCnt = 0;
+						iPower--;
+					}
+
+					if (iPower == 0)  //파워가 0이면
+						bUpdown = false;  //최소치이다.
+				}
+
+			}
+		}
+	}
+
+	else // 키 입력이 없을 시에는 그냥 다 검정으로 채움.
+	{
+		g_DBBF.TextColor(BLACK, BLACK);
+		for (int i = 0; i <= MAX_GAGE; i++)
+			g_DBBF.WriteBuffer(DICE_POS_X + 8 + i, DICE_POS_Y + 15, (TCHAR *)"  ");
+
+		//m_Dice.Throw_Dice();
+	}
+}
+
+void CGame::PlayFX(int idx)
+{
+	FMOD_CHANNEL *tmp_Channel;	// 소리좀 줄이자
+	FMOD_System_PlaySound(g_System, g_FX_Sound[idx], NULL, FALSE, &tmp_Channel);	// 주사위 음성 재생
+	FMOD_Channel_SetVolume(tmp_Channel, 0.5f);	// 소리좀 줄이자
 }

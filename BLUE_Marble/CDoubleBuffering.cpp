@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "CDoubleBuffering.h"
+//#include "CDoubleBuffering.h"
 
 
 CDoubleBuffering::CDoubleBuffering() // 생성자에서 버퍼를 생성한다.

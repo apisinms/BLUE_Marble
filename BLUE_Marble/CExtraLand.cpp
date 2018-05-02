@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CExtraLand.h"
-#include "CPlayer.h"
+//#include "CPlayer.h"
 
 CExtraLand::CExtraLand()
 {

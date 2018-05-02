@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __CDOUBLEBUFFERING__
+#define __CDOUBLEBUFFERING__
 #define MAP_X_MAX 250
 #define MAP_Y_MAX 100
 
@@ -26,4 +27,4 @@ public:
 	void DeleteBuffer();	// 버퍼를 없앨 때 (최후 1회)
 	void gotoxy(int x, int y);
 };
-
+#endif
