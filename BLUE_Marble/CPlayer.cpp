@@ -34,10 +34,14 @@ ALL_LANDS CPlayer::Get_PlayerStandIndex()
 	return eStand_idx;
 }
 
-void CPlayer::Move_PlayerPos(COORD pos, int iStand_Move)
+void CPlayer::Move_PlayerPos(COORD pos)
 {
 	this->pos = pos;
-	this->eStand_idx = (ALL_LANDS)(iStand_Move + eStand_idx);
+}
+
+void CPlayer::Set_PlayerStandIndex(ALL_LANDS eStand_idx)
+{
+	this->eStand_idx = eStand_idx;
 }
 
 

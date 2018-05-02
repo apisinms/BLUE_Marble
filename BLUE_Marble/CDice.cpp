@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CDice.h"
-#include<time.h>
+#include <time.h>
 #include <conio.h>
 
 CDice::CDice()
@@ -13,20 +13,21 @@ int CDice::Throw_Dice(int x, int y, BOOL *bIsDouble)
 {
 	pos.X = x;
 	pos.Y = y;
-	this->iDice1 = iDice1;
-	this->iDice2 = iDice2;
-	this->iDice_result = iDice_result;
 	srand((unsigned)time(NULL));
 	iDice1 = rand() % 6 + 1;
 	iDice2 = rand() % 6 + 1;
+	//iDice1 = 5;
+	//iDice2 = 5;
 	if (iDice1 == iDice2)
 		*bIsDouble = TRUE;
-	iDice_result = iDice1 + iDice1;
+	iDice_result = iDice1 + iDice2;
 	return iDice_result;
 }
 void CDice::Print_Diceinfo()
 {
 	int iNext_Line = 0;   // 棻擠 還
+
+
 	switch (iDice1)
 	{
 	case 1:
@@ -102,7 +103,6 @@ void CDice::Print_Diceinfo()
 		g_DBBF.WriteBuffer(pos.X, pos.Y + iNext_Line++, (TCHAR *)"弛≒≒≒    ≒≒≒弛");
 		g_DBBF.WriteBuffer(pos.X, pos.Y + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式戎");
 		break;
-
 	}
 	iNext_Line = 0;
 	switch (iDice2)
@@ -182,6 +182,7 @@ void CDice::Print_Diceinfo()
 		break;
 
 	}
+
 }
 //int CDice::Throw_Dice()
 //{

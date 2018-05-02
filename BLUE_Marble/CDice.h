@@ -1,4 +1,5 @@
 #pragma once
+//#include "CGame.h"
 class CDice
 {
 private:

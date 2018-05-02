@@ -11,6 +11,6 @@ public:
 	void Arrive_Land(CPlayer &Player);
 	void Print_LandInfo();	// 땅 정보 출력
 	void Set_LandInfo(TCHAR *cLand_Name, int x, int y);
-
+	COORD Get_LandPosition();
 };
 

@@ -47,3 +47,8 @@ void CExtraLand::Set_LandInfo(TCHAR *cLand_Name, int x, int y)
 	pos.X = x;
 	pos.Y = y;
 }
+
+COORD CExtraLand::Get_LandPosition()
+{
+	return pos;
+}

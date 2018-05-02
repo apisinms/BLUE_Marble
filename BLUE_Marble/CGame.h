@@ -12,6 +12,7 @@
 #define TILE_DISTANCE 3	// 타일 간의 거리
 #define LAND_TEXT_VERTICAL 5	// 땅 글씨 가로
 #define LAND_TEXT_HORIZONTAL 6	// 땅 글씨 세로
+#define MAX_DOUBLE 2
 
 typedef enum
 {
@@ -20,7 +21,7 @@ typedef enum
 
 typedef enum
 {
-	P1,P2,P3,P4
+	P1,P2,P3,P4,NONE
 }eCURPLAYER;
 enum
 {
@@ -28,6 +29,7 @@ enum
 };
 class CGame
 {
+
 private:
 	BOARD_LTRB eBoardLTRB = TOP;
 	CDoubleBuffering m_DBBF;	// 더블 버퍼링을 사용하기 위한 멤버 변수
@@ -70,11 +72,19 @@ private:
 		TEXT("                                  ==================================================+*======++*********************************++===============================\n");
 private:
 	void Print_Game_Board();	// 게임 판 전체를 출력하는 메서드
-	void TextColor(int foreground, int background);	// 텍스트 색상을 변경하는 메서드
-	void Print_Tile(int x, int y);	// 개별 타일을 출력하는 메서드
+	void Print_Indivisual_Tile(int x, int y);	// 개별 타일을 출력하는 메서드
+	void Print_All_Tile();	// 모든 네모 타일을 출력하는 메서드
+	void Print_All_Land();	// 모든 땅을 출력하는 메서드
+	void Print_All_ExtraLand();	// 모든 특수지역을 출력하는 메서드
+	void Print_Dice_Result(BOOL *bPrintCharacter);	// 주사위 돌린 결과를 출력할 메서드
+	void Print_All_Character();	// 모든 캐릭터 정보를 출력할 메서드
 	void Input_PlayerNum();	// 플레이어의 수를 입력받을 메서드
-	void PrintIntro();
+	void PrintIntro();	// 인트로 화면 출력
 	void MoveXY(int x, int y);	// 더블버퍼링을 사용하지 않을 때 x, y 커서 움직이는 메서드
+	void TextColor(int foreground, int background);	// 텍스트 색상을 변경하는 메서드
+	void Check_BGM();	// 음악 꺼졌는지 확인하고 꺼졌으면 다시 켜줌
+	void RePaint();
+
 public:
 	CGame();
 	~CGame();
