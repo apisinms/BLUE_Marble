@@ -24,5 +24,7 @@ public:
 	void Set_PlayerStandIndex(ALL_LANDS eStand_idx);
 
 	int iDiceDoubleCnt = 0;	// 더블 횟수
+	int iLeftTurn = 0;	// 무인도 갇혔을 때 남은 턴 수
+	int iWorldTrip = WORLDTRIP_NONE;	// 세계여행 걸렸는지
 };
 #endif

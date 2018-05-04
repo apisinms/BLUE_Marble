@@ -82,6 +82,7 @@ CGame::CGame()
 		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_ThrowDice.wav", FMOD_DEFAULT, 0, &g_FX_Sound[FX_THROW_DICE]);
 		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_Win.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_WIN]);
 		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_Double.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_DICE_DOUBLE]);
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_WorldTripWant.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_WORLDTRIP_WANT]);
 
 		for (int i = 0; i < 12; i++)
 		{
@@ -95,6 +96,16 @@ CGame::CGame()
 CGame::~CGame()
 {
 	g_DBBF.DeleteBuffer();	// 더블 버퍼링을 모두 사용했으니 자원을 반납함.
+	
+	/// 사운드 해제
+	for (int i = 0; i < MAX_BGM; i++)
+		FMOD_Sound_Release(BGM_Music[i]);
+	for (int i = 0; i < MAX_FX; i++)
+		FMOD_Sound_Release(g_FX_Sound[i]);
+
+	FMOD_System_Close(g_System);
+	FMOD_System_Release(g_System);
+
 	delete[] m_Player;
 }
 
@@ -182,7 +193,7 @@ void CGame::Input_PlayerNum()	// 플레이어의 수를 입력받는다
 			
 			while (true)
 			{
-				iCurBGM = rand() % BGM4;
+				iCurBGM = rand() % (BGM4 + 1);
 				if (iCurBGM != INTRO && iCurBGM != INPUTPLAYER)
 					break;
 			}
@@ -201,15 +212,15 @@ void CGame::TextColor(int foreground, int background)
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
 
+
 // 전체 게임 타일 모두 출력
 void CGame::Print_Game_Board()
 {
 	system("mode con cols=190 lines=50");	// 화면 크기 다시 늘림
 
-
 	while (true)
 	{
-		BOOL bPrintCharacter = TRUE;
+
 		g_DBBF.ClearBuffer();	// 이전 버퍼의 내용을 모두 지워준다.
 
 		/// 너비와 높이에 맞게 계산하여 타일을 출력한다.
@@ -220,22 +231,22 @@ void CGame::Print_Game_Board()
 		Print_All_ExtraLand();
 
 		/// 주사위 출력 및 주사위 굴리기
-		m_Dice.Dice_Proc(*this);
+ 		m_Dice.Dice_Proc(*this);
 		//m_Dice.Print_Diceinfo();
 		//Print_Dice_Gage();	// 주사위 게이지 출력
 		//Print_Dice_Result(&bPrintCharacter);
 
 		/// 캐릭터 정보 출력(주사위 던지지지 않았을 때만, 주사위 던질 때는 Dice에서 알아서 처리하니까)
-		if (bPrintCharacter == TRUE)
+		//if (bPrintCharacter == TRUE)
 			Print_All_Character();
 
-		else
-			RePaint();
+		//else
+			//RePaint();
 
 		Check_BGM();
+		FMOD_System_Update(g_System);	// 이 함수를 계속적으로 호출해줘야 사운드가 씹히지 않는다.
 		g_DBBF.FlippingBuffer();	// 버퍼를 바꿔준다(더블버퍼링)
-		Sleep(200);
-
+		Sleep(1);
 	}
 }
 
@@ -382,7 +393,7 @@ void CGame::Print_Dice_Result(BOOL *bPrintCharacter)
 		cLandPos.Y += 2;
 		m_Player[eCurPlayer].Move_PlayerPos(cLandPos);
 		m_Player[eCurPlayer].Set_PlayerStandIndex(ISLAND_LAND);
-		RePaint();
+		RePaint(TRUE);
 
 		/// 다음 플레이어로
 		if (eCurPlayer == (iPlayerNum - 1))
@@ -465,7 +476,7 @@ void CGame::Print_Dice_Result(BOOL *bPrintCharacter)
 	}	// End For State
 
 	// 마지막엔 화면이 Clear가 안되기 때문에 한번 더 그려줘야 한다.
-	RePaint();
+	RePaint(TRUE);
 
 	m_Player[eCurPlayer].Set_PlayerStandIndex((ALL_LANDS)iHaveToGo_Idx);	// 최종 플레이어가 간 땅의 위치를 저장시킴
 
@@ -497,7 +508,7 @@ void CGame::Check_BGM()
 	{
 		while (true)
 		{
-			iCurBGM = rand() % BGM4;
+			iCurBGM = rand() % (BGM4 + 1);
 			if (iCurBGM != INTRO && iCurBGM != INPUTPLAYER)
 				break;
 		}
@@ -506,7 +517,7 @@ void CGame::Check_BGM()
 	}
 }
 
-void CGame::RePaint()
+void CGame::RePaint(BOOL bSleep)
 {
 	g_DBBF.ClearBuffer();
 	Print_All_Tile();
@@ -514,7 +525,10 @@ void CGame::RePaint()
 	Print_All_ExtraLand();
 	Print_All_Character();
 	m_Dice.Print_Diceinfo();
-	Sleep(300);
+
+	if(bSleep == TRUE)
+		Sleep(PLAYER_MOVE_SPEED);
+
 	g_DBBF.FlippingBuffer();
 }
 
@@ -629,7 +643,7 @@ void CGame::Print_Dice_Gage()
 
 void CGame::PlayFX(int idx)
 {
-	FMOD_CHANNEL *tmp_Channel;	// 소리좀 줄이자
+	FMOD_CHANNEL *tmp_Channel;	// 임시 채널
 	FMOD_System_PlaySound(g_System, g_FX_Sound[idx], NULL, FALSE, &tmp_Channel);	// 주사위 음성 재생
 	FMOD_Channel_SetVolume(tmp_Channel, 0.5f);	// 소리좀 줄이자
 }

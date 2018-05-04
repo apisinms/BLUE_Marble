@@ -77,7 +77,7 @@ private:
 	void MoveXY(int x, int y);	// 더블버퍼링을 사용하지 않을 때 x, y 커서 움직이는 메서드
 	void TextColor(int foreground, int background);	// 텍스트 색상을 변경하는 메서드
 	void Check_BGM();	// 음악 꺼졌는지 확인하고 꺼졌으면 다시 켜줌
-	void RePaint();	// 전체 다시 그리기
+	void RePaint(BOOL bSleep);	// 전체 다시 그리기
 	void Print_Dice_Gage();	// 주사위 게이지 그리기(전체 관장)
 
 
