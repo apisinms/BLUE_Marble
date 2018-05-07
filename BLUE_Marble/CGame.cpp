@@ -17,32 +17,32 @@ CGame::CGame()
 	/// Land의 정보를 초기화한다.
 	{
 		// Left땅들
-		m_Lands[0].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"방    콕", 8, 3, 30, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 6));
-		m_Lands[1].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"베 이 징", 11, 5, 33, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 5) - 1);
-		m_Lands[2].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"타이페이", 15, 7, 35, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 4) - 2);
-		m_Lands[3].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"두 바 이", 15, 7, 35, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 3) - 3);
-		m_Lands[4].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"카 이 로", 15, 7, 35, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 2) - 4);
+		m_Lands[0].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"방    콕", 8, BUILD_PRICE_LEFT, LAND_PRICE_LEFT, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 6));
+		m_Lands[1].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"베 이 징", 11, BUILD_PRICE_LEFT, LAND_PRICE_LEFT, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 5) - 1);
+		m_Lands[2].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"타이페이", 15, BUILD_PRICE_LEFT, LAND_PRICE_LEFT, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 4) - 2);
+		m_Lands[3].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"두 바 이", 15, BUILD_PRICE_LEFT, LAND_PRICE_LEFT, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 3) - 3);
+		m_Lands[4].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"카 이 로", 15, BUILD_PRICE_LEFT, LAND_PRICE_LEFT, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 2) - 4);
 
 		// Top 땅들
-		m_Lands[5].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"도    쿄", 8, 3, 30, 0, (LAND_TEXT_VERTICAL * 5) - 1, 1);
-		m_Lands[6].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"시 드 니", 11, 5, 33, 0, (LAND_TEXT_VERTICAL * 9) - 2, 1);
-		m_Lands[7].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"퀘    벡", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 13) - 3, 1);
-		m_Lands[8].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"하 와 이", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 17) - 4, 1);
-		m_Lands[9].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"상파울로", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 21) - 5, 1);
+		m_Lands[5].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"도    쿄", 8, BUILD_PRICE_TOP, LAND_PRICE_TOP, 0, (LAND_TEXT_VERTICAL * 5) - 1, 1);
+		m_Lands[6].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"시 드 니", 11, BUILD_PRICE_TOP, LAND_PRICE_TOP, 0, (LAND_TEXT_VERTICAL * 9) - 2, 1);
+		m_Lands[7].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"퀘    벡", 15, BUILD_PRICE_TOP, LAND_PRICE_TOP, 0, (LAND_TEXT_VERTICAL * 13) - 3, 1);
+		m_Lands[8].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"하 와 이", 15, BUILD_PRICE_TOP, LAND_PRICE_TOP, 0, (LAND_TEXT_VERTICAL * 17) - 4, 1);
+		m_Lands[9].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"상파울로", 15, BUILD_PRICE_TOP, LAND_PRICE_TOP, 0, (LAND_TEXT_VERTICAL * 21) - 5, 1);
 
 		// Right 땅들
-		m_Lands[10].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"프 라 하", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 2) - 4);
-		m_Lands[11].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"베 를 린", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 3) - 3);
-		m_Lands[12].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"모스크바", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 4) - 2);
-		m_Lands[13].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"제 네 바", 11, 5, 33, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 5) - 1);
-		m_Lands[14].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"로    마", 8, 3, 30, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 6));
+		m_Lands[10].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"프 라 하", 15, BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 2) - 4);
+		m_Lands[11].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"베 를 린", 15, BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 3) - 3);
+		m_Lands[12].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"모스크바", 15, BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 4) - 2);
+		m_Lands[13].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"제 네 바", 11, BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 5) - 1);
+		m_Lands[14].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"로    마", 8, BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 6));
 
 		// Bottom 땅들
-		m_Lands[15].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"평    양", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 21) - 5, (LAND_TEXT_HORIZONTAL * 7) + 1);
-		m_Lands[16].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"런    던", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 17) - 4, (LAND_TEXT_HORIZONTAL * 7) + 1);
-		m_Lands[17].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"파    리", 15, 7, 35, 0, (LAND_TEXT_VERTICAL * 13) - 3, (LAND_TEXT_HORIZONTAL * 7) + 1);
-		m_Lands[18].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"뉴    욕", 11, 5, 33, 0, (LAND_TEXT_VERTICAL * 9) - 2, (LAND_TEXT_HORIZONTAL * 7) + 1);
-		m_Lands[19].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"서    울", 8, 3, 30, 0, (LAND_TEXT_VERTICAL * 5) - 1, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[15].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"평    양", 15, BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, 0, (LAND_TEXT_VERTICAL * 21) - 5, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[16].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"런    던", 15, BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, 0, (LAND_TEXT_VERTICAL * 17) - 4, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[17].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"파    리", 15, BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, 0, (LAND_TEXT_VERTICAL * 13) - 3, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[18].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"뉴    욕", 11, BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, 0, (LAND_TEXT_VERTICAL * 9) - 2, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[19].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"서    울", 8, BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, 0, (LAND_TEXT_VERTICAL * 5) - 1, (LAND_TEXT_HORIZONTAL * 7) + 1);
 	}
 
 	///ExtranLands에 대한 정보를 초기화 한다.
@@ -73,7 +73,7 @@ CGame::CGame()
 
 
 		/// 사운드 셋팅 효과음
-		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_MonthPay.wav", FMOD_DEFAULT, 0, &g_FX_Sound[FX_MONTH_PAY]);
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_MonthPay.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_MONTH_PAY]);
 		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_IslandArrive.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_ISLAND_ARRIVE]);
 		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_WorldTripArrive.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_WORLDTRIP_ARRIVE]);
 		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_GoldKeyArrive.wav", FMOD_DEFAULT, 0, &g_FX_Sound[FX_GOLDKEY_ARRIVE]);
@@ -83,6 +83,7 @@ CGame::CGame()
 		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_Win.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_WIN]);
 		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_Double.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_DICE_DOUBLE]);
 		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_WorldTripWant.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_WORLDTRIP_WANT]);
+		FMOD_System_CreateSound(g_System, "Sounds\\FX\\FX_WorldTripFly.mp3", FMOD_DEFAULT, 0, &g_FX_Sound[FX_WORLDTRIP_FLY]);
 
 		for (int i = 0; i < 12; i++)
 		{
@@ -180,15 +181,15 @@ void CGame::Input_PlayerNum()	// 플레이어의 수를 입력받는다
 			{
 				if (num >= 2)
 				{
-					m_Player[0].Set_PlayerInfo((TCHAR *)"♠", (LAND_TEXT_VERTICAL + P1_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3);
-					m_Player[1].Set_PlayerInfo((TCHAR *)"◆", (LAND_TEXT_VERTICAL + P2_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3);
+					m_Player[0].Set_PlayerInfo((TCHAR *)"♠", (LAND_TEXT_VERTICAL + P1_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3, PLAYER_START_MONEY);
+					m_Player[1].Set_PlayerInfo((TCHAR *)"◆", (LAND_TEXT_VERTICAL + P2_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3, PLAYER_START_MONEY);
 				}
 
 				if (num >= 3)
-					m_Player[2].Set_PlayerInfo((TCHAR *)"♥", (LAND_TEXT_VERTICAL + P3_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3);
+					m_Player[2].Set_PlayerInfo((TCHAR *)"♥", (LAND_TEXT_VERTICAL + P3_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3, PLAYER_START_MONEY);
 
 				if (num >= 4)
-					m_Player[3].Set_PlayerInfo((TCHAR *)"♣", (LAND_TEXT_VERTICAL + P4_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3);
+					m_Player[3].Set_PlayerInfo((TCHAR *)"♣", (LAND_TEXT_VERTICAL + P4_POS) - 2, (LAND_TEXT_HORIZONTAL * 7) + 3, PLAYER_START_MONEY);
 			}
 			
 			while (true)
@@ -212,39 +213,33 @@ void CGame::TextColor(int foreground, int background)
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
 
-
 // 전체 게임 타일 모두 출력
 void CGame::Print_Game_Board()
 {
 	system("mode con cols=190 lines=50");	// 화면 크기 다시 늘림
+	BOOL bPlayerTurn_FirstPrint = FALSE;
 
 	while (true)
 	{
 
 		g_DBBF.ClearBuffer();	// 이전 버퍼의 내용을 모두 지워준다.
+		if(bPlayerTurn_FirstPrint == FALSE)
+			Print_Player_Turn();
 
 		/// 너비와 높이에 맞게 계산하여 타일을 출력한다.
 		Print_All_Tile();
-
 		/// 땅 + 특수 땅 정보 출력
 		Print_All_Land();
 		Print_All_ExtraLand();
-
+		m_Lands->Print_Information(eLandPrint_Idx);
 		/// 주사위 출력 및 주사위 굴리기
  		m_Dice.Dice_Proc(*this);
-		//m_Dice.Print_Diceinfo();
-		//Print_Dice_Gage();	// 주사위 게이지 출력
-		//Print_Dice_Result(&bPrintCharacter);
-
 		/// 캐릭터 정보 출력(주사위 던지지지 않았을 때만, 주사위 던질 때는 Dice에서 알아서 처리하니까)
-		//if (bPrintCharacter == TRUE)
-			Print_All_Character();
-
-		//else
-			//RePaint();
-
+		Print_All_Character();
+		/// 사운드 업데이트
 		Check_BGM();
 		FMOD_System_Update(g_System);	// 이 함수를 계속적으로 호출해줘야 사운드가 씹히지 않는다.
+
 		g_DBBF.FlippingBuffer();	// 버퍼를 바꿔준다(더블버퍼링)
 		Sleep(1);
 	}
@@ -324,9 +319,10 @@ void CGame::Print_All_Tile()
 void CGame::Print_All_Land()
 {
 	// 땅 정보를 출력한다.
-	g_DBBF.TextColor(WHITE, BLACK);
 	for (int i = 0; i < 20; i++)
+	{
 		m_Lands[i].Print_LandInfo();
+	}
 }
 
 void CGame::Print_All_ExtraLand()
@@ -366,139 +362,6 @@ void CGame::Print_All_Character()
 
 }
 
-void CGame::Print_Dice_Result(BOOL *bPrintCharacter)
-{
-	BOOL bIsDouble;	// 더블이냐?
-	COORD cLandPos;	// 플레이어가 움직여야 할 땅의 포지션
-	ALL_LANDS ePlayerStand_Idx;	// 현재 플레이어가 밟고 있는 인덱스(Land + ExtraLand)
-	int iDice_Result;	// 주사위 결과
-	int AddPos;	// 각 플레이어마다 더해줘야 할 좌표값
-	int iHaveToGo_Idx = 0;	// 가야되는 인덱스
-
-
-
-	bIsDouble = FALSE;
-	iDice_Result = m_Dice.Throw_Dice(DICE_POS_X, DICE_POS_Y, &bIsDouble);	// 주사위 굴린 결과를 얻어옴
-	ePlayerStand_Idx = m_Player[eCurPlayer].Get_PlayerStandIndex();	// 플레이어가 밟고있는 땅 인덱스
-
-	m_Dice.Print_Diceinfo();
-
-	if (m_Player[eCurPlayer].iDiceDoubleCnt >= MAX_DOUBLE) // 최대 더블 횟수 넘어가면
-	{
-		m_Player[eCurPlayer].iDiceDoubleCnt = 0;	// 더블 횟수 0으로
-		/// 무인도 위치를 얻어와서 지금 플레이어를 무인도로 보내버림
-		cLandPos = m_ExtranLands[1].Get_LandPosition();
-		AddPos = P1_POS * (eCurPlayer + 1);
-		cLandPos.X = (cLandPos.X + AddPos) - 2;
-		cLandPos.Y += 2;
-		m_Player[eCurPlayer].Move_PlayerPos(cLandPos);
-		m_Player[eCurPlayer].Set_PlayerStandIndex(ISLAND_LAND);
-		RePaint(TRUE);
-
-		/// 다음 플레이어로
-		if (eCurPlayer == (iPlayerNum - 1))
-			eCurPlayer = P1;
-
-		else
-			eCurPlayer = (eCURPLAYER)(eCurPlayer + 1);
-
-		*bPrintCharacter = FALSE;	// 캐릭터를 다시 그리지 않게 한다.
-		return;
-	}
-
-	int Land_Diff = 0;	// ExtraLand랑 Land의 차이를 빼주려고
-	iHaveToGo_Idx = (ALL_LANDS)(iDice_Result + ePlayerStand_Idx);	// 가야할 땅 = 현재 밟은 땅 + 주사위 눈 더한 값
-
-
-	for (int i = ePlayerStand_Idx + 1; i <= iHaveToGo_Idx; i++)
-	{
-		g_DBBF.ClearBuffer();
-
-		// 인덱스로 현재 땅의 위치를 조사해서 ExtraLand와 Land의 차이를 빼준다.
-		if (i > START_LAND)
-			Land_Diff = 1;
-
-		if (i > ISLAND_LAND)
-			Land_Diff = 2;
-
-		if (i > WORLDTRIP_LAND)
-			Land_Diff = 3;
-
-		if (i > GOLDKEY_LAND)
-			Land_Diff = 4;
-
-		// 밟은 땅의 위치정보를 얻어온다.
-		switch (i)
-		{
-		case START_LAND:	// 출발점
-			cLandPos = m_ExtranLands[0].Get_LandPosition();
-			break;
-
-		case ISLAND_LAND:	// 무인도
-			cLandPos = m_ExtranLands[1].Get_LandPosition();
-			break;
-
-		case WORLDTRIP_LAND:	// 세계여행
-			cLandPos = m_ExtranLands[2].Get_LandPosition();
-			break;
-
-		case GOLDKEY_LAND:	// 황금열쇠
-			cLandPos = m_ExtranLands[3].Get_LandPosition();
-			break;
-
-		default:
-			cLandPos = m_Lands[i - Land_Diff].Get_LandPosition();	// 현재 플레이어가 밟고 있는 땅의 좌표값을 얻어온다.
-			break;
-		}
-
-		AddPos = P1_POS * (eCurPlayer + 1);	// 플레이어가 지정되어야 하는 위치에 맞게 좌표를 수정해주기 위해서
-
-		cLandPos.X = (cLandPos.X + AddPos) - 2;
-		cLandPos.Y += 2;
-
-		m_Player[eCurPlayer].Move_PlayerPos(cLandPos);
-
-		/// 사각 타일 + 땅 + 특수 땅 + 캐릭터 출력
-		Print_All_Tile();
-		Print_All_Land();
-		Print_All_ExtraLand();
-		Print_All_Character();
-
-		Sleep(200);
-		g_DBBF.FlippingBuffer();
-
-
-		if (i == SEOUL_LAND)	// 인덱스가 맵 끝지점에 도달하면 빼준다.
-		{
-			iHaveToGo_Idx -= SEOUL_LAND;
-			i = START_LAND - 1;
-		}
-	}	// End For State
-
-	// 마지막엔 화면이 Clear가 안되기 때문에 한번 더 그려줘야 한다.
-	RePaint(TRUE);
-
-	m_Player[eCurPlayer].Set_PlayerStandIndex((ALL_LANDS)iHaveToGo_Idx);	// 최종 플레이어가 간 땅의 위치를 저장시킴
-
-
-	if (bIsDouble == FALSE)
-	{
-		if (eCurPlayer == (iPlayerNum - 1))
-			eCurPlayer = P1;
-
-		else
-			eCurPlayer = (eCURPLAYER)(eCurPlayer + 1);	// 다음 플레이어로
-	}
-
-	else // 더블이면
-	{
-		if (m_Player[eCurPlayer].iDiceDoubleCnt < MAX_DOUBLE)	// 최대 더블 횟수까지는 가능
-		{
-			m_Player[eCurPlayer].iDiceDoubleCnt++;
-			eCurPlayer = eCurPlayer;	// 한 번 더!
-		}
-	}
-}
 void CGame::Check_BGM()
 {
 	FMOD_BOOL bSoundPlaying = TRUE;
@@ -523,8 +386,10 @@ void CGame::RePaint(BOOL bSleep)
 	Print_All_Tile();
 	Print_All_Land();
 	Print_All_ExtraLand();
+	m_Lands->Print_Information(eLandPrint_Idx);
 	Print_All_Character();
 	m_Dice.Print_Diceinfo();
+	Print_Dice_Result_Text(); //주사위 결과값 출력
 
 	if(bSleep == TRUE)
 		Sleep(PLAYER_MOVE_SPEED);
@@ -647,3 +512,71 @@ void CGame::PlayFX(int idx)
 	FMOD_System_PlaySound(g_System, g_FX_Sound[idx], NULL, FALSE, &tmp_Channel);	// 주사위 음성 재생
 	FMOD_Channel_SetVolume(tmp_Channel, 0.5f);	// 소리좀 줄이자
 }
+
+void CGame::Print_Player_Turn()
+{
+	char cPlayer_TurnPrint[50];
+	int iNext_Line = 0;
+	int iTurn_Print = NULL;
+	iTurn_Print = (int)eCurPlayer + 1;
+	g_DBBF.TextColor(WHITE, BLACK);
+#if OS_VER == 7
+	g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"┌─────────────────────┐");
+#elif OS_VER == 10
+	g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"┌──────────────────────────────────────────┐");
+#endif
+	wsprintf(cPlayer_TurnPrint, "│ 플레이어 %d의 차례입니다. 주사위를 굴려욧!│", iTurn_Print);
+	g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)cPlayer_TurnPrint);
+#if OS_VER == 7
+	g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"└─────────────────────┘");
+#elif OS_VER == 10
+	g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"└──────────────────────────────────────────┘");
+#endif
+
+}
+void CGame::Print_Dice_Result_Text()
+{
+	char cDice_ResultPrint[50];
+	int iNext_Line = 0;
+	g_DBBF.TextColor(WHITE, BLACK);
+
+	if (iPlayer_Dice_Result == 0)
+	{
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"┌─────────────────────┐");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"┌──────────────────────────────────────────┐");
+#endif
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"│ 아직 주사위를 돌리지 않았습니다. 돌려요!!│");
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"└─────────────────────┘");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"└──────────────────────────────────────────┘");
+#endif
+	}
+
+	else
+	{
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"┌─────────────────────┐");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"┌──────────────────────────────────────────┐");
+#endif
+		if (m_Player[eCurPlayer].bPlayer_Dice_Double == TRUE)
+			g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"│ 더블! 한 번 더 돌릴 수 있어요~ 움직입시다│");
+
+		if (iPlayer_Dice_Result >= 10)	// 10 자리 이상이면 스페이스 한칸, 1의 자리면 스페이스 두 칸
+			wsprintf(cDice_ResultPrint, "│ 핑그르르~ 주사위를 굴려 %d가 나왔습니다. │", iPlayer_Dice_Result);
+
+		else
+			wsprintf(cDice_ResultPrint, "│ 핑그르르~ 주사위를 굴려 %d가 나왔습니다.  │", iPlayer_Dice_Result);
+
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)cDice_ResultPrint);
+
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"└─────────────────────┘");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"└──────────────────────────────────────────┘");
+#endif
+	}
+};

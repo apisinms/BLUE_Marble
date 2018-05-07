@@ -11,6 +11,10 @@
 #define LAND_TEXT_VERTICAL 5	// 땅 글씨 가로
 #define LAND_TEXT_HORIZONTAL 6	// 땅 글씨 세로
 #define MAX_DOUBLE 2
+#define PLAYER_TURN_XPOS 25 //플레이어 턴 출력 x좌표
+#define PLAYER_TURN_YPOS 18 // 플레이어 턴 출력 y좌표
+#define DICE_TURN_XPOS 25 //주사위 결과값 출력 x좌표
+#define DICE_TURN_YPOS 24 // y좌표
 
 typedef enum
 {
@@ -25,16 +29,19 @@ typedef enum
 class CGame
 {
 	friend CDice;
+	friend CLand;
 private:
 	BOARD_LTRB eBoardLTRB = TOP;
 	CDoubleBuffering m_DBBF;	// 더블 버퍼링을 사용하기 위한 멤버 변수
 	CPlayer *m_Player;	// 2~4인을 동적 생성시킬 플레이어 포인터 멤버변수
 	CLand m_Lands[20];	// 땅의 정보 저장시킬 20개의 클래스
 	CExtraLand m_ExtranLands[4];	// 특수한 땅의 기능을 하는 ExtranLand 객체
-	CDice m_Dice;
+	CDice m_Dice;	// 주사위 클래스
+	ALL_LANDS  eLandPrint_Idx;	// 출력해야 할 땅의 인덱스
 
 	int iPlayerNum;	// 플레이어 수
 	int iCurBGM;	// 현재 재생중인 BGM
+	int iPlayer_Dice_Result; // 플레이어 주사위 결과값 출력
 
 	eCURPLAYER eCurPlayer = P1;	// 현재 주사위 굴려야하는 플레이어
 
@@ -70,7 +77,6 @@ private:
 	void Print_All_Tile();	// 모든 네모 타일을 출력하는 메서드
 	void Print_All_Land();	// 모든 땅을 출력하는 메서드
 	void Print_All_ExtraLand();	// 모든 특수지역을 출력하는 메서드
-	void Print_Dice_Result(BOOL *bPrintCharacter);	// 주사위 돌린 결과를 출력할 메서드
 	void Print_All_Character();	// 모든 캐릭터 정보를 출력할 메서드
 	void Input_PlayerNum();	// 플레이어의 수를 입력받을 메서드
 	void PrintIntro();	// 인트로 화면 출력
@@ -79,7 +85,8 @@ private:
 	void Check_BGM();	// 음악 꺼졌는지 확인하고 꺼졌으면 다시 켜줌
 	void RePaint(BOOL bSleep);	// 전체 다시 그리기
 	void Print_Dice_Gage();	// 주사위 게이지 그리기(전체 관장)
-
+	void Print_Player_Turn(); //플레이어 턴 출력
+	void Print_Dice_Result_Text(); // 주사위 전체 출력
 
 public:
 	CGame();

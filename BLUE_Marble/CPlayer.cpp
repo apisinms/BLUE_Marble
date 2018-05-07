@@ -16,12 +16,13 @@ CPlayer::~CPlayer()
 }
 
 
-void CPlayer::Set_PlayerInfo(TCHAR *cPlayer_Shape, int x, int y)
+void CPlayer::Set_PlayerInfo(TCHAR *cPlayer_Shape, int x, int y, int money)
 {
 	this->cPlayer_Shape = new TCHAR[lstrlen(cPlayer_Shape)];
 	lstrcpy(this->cPlayer_Shape, cPlayer_Shape);
 	pos.X = x;
 	pos.Y = y;
+	iPlayer_Money = money;
 }
 
 void CPlayer::Print_PlayerInfo()

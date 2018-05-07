@@ -1,13 +1,13 @@
 #ifndef __CPLAYER__
 #define __CPLAYER__
-//#include "stdafx.h"
-//#include "CLand.h"
-//#include "CDoubleBuffering.h"
+#define PLAYER_START_MONEY 200000
 
 class CLand;
+class CDice;
 class CPlayer
 {
-	friend CLand;	// CLand의 private 멤버들을 접근하기 위해서
+	friend CDice;
+	friend CLand;
 private:
 	int iPlayer_Money;
 	TCHAR *cPlayer_Shape;
@@ -17,7 +17,7 @@ private:
 public:
 	CPlayer();
 	~CPlayer();
-	void Set_PlayerInfo(TCHAR *cPlayer_Shape, int x, int y);
+	void Set_PlayerInfo(TCHAR *cPlayer_Shape, int x, int y, int money);
 	void Print_PlayerInfo();
 	void Move_PlayerPos(COORD pos);
 	ALL_LANDS Get_PlayerStandIndex();
@@ -26,5 +26,6 @@ public:
 	int iDiceDoubleCnt = 0;	// 더블 횟수
 	int iLeftTurn = 0;	// 무인도 갇혔을 때 남은 턴 수
 	int iWorldTrip = WORLDTRIP_NONE;	// 세계여행 걸렸는지
+	BOOL bPlayer_Dice_Double = FALSE;
 };
 #endif
