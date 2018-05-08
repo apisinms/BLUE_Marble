@@ -23,6 +23,7 @@ void CPlayer::Set_PlayerInfo(TCHAR *cPlayer_Shape, int x, int y, int money)
 	pos.X = x;
 	pos.Y = y;
 	iPlayer_Money = money;
+	iPlayer_Total_Money = 0;
 }
 
 void CPlayer::Print_PlayerInfo()

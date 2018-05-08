@@ -26,8 +26,8 @@ public:
 	CLand();
 	~CLand();
 	
-	void Set_LandInfo(int iLand_Building, TCHAR *cLand_Owner, TCHAR *cLand_Name, int iLand_Pass_Money, int iLand_Build_Price,
-		int iLand_Price, int iTotal_LandPrice, int x, int y);
+	void Set_LandInfo(int iLand_Building, TCHAR *cLand_Owner, TCHAR *cLand_Name, int iLand_Build_Price,
+		int iLand_Price, int x, int y);
 
 	void Buy_Land(CGame &Game); // 땅 구입
 	void Build_Building(CGame &Game);	// 건물 건설

@@ -17,32 +17,32 @@ CGame::CGame()
 	/// Land의 정보를 초기화한다.
 	{
 		// Left땅들
-		m_Lands[0].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"방    콕", 8, BUILD_PRICE_LEFT, LAND_PRICE_LEFT, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 6));
-		m_Lands[1].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"베 이 징", 11, BUILD_PRICE_LEFT, LAND_PRICE_LEFT, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 5) - 1);
-		m_Lands[2].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"타이페이", 15, BUILD_PRICE_LEFT, LAND_PRICE_LEFT, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 4) - 2);
-		m_Lands[3].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"두 바 이", 15, BUILD_PRICE_LEFT, LAND_PRICE_LEFT, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 3) - 3);
-		m_Lands[4].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"카 이 로", 15, BUILD_PRICE_LEFT, LAND_PRICE_LEFT, 0, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 2) - 4);
+		m_Lands[0].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"방    콕", BUILD_PRICE_LEFT, LAND_PRICE_LEFT, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 6));
+		m_Lands[1].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"베 이 징", BUILD_PRICE_LEFT, LAND_PRICE_LEFT, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 5) - 1);
+		m_Lands[2].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"타이페이", BUILD_PRICE_LEFT, LAND_PRICE_LEFT, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 4) - 2);
+		m_Lands[3].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"두 바 이", BUILD_PRICE_LEFT, LAND_PRICE_LEFT, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 3) - 3);
+		m_Lands[4].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"카 이 로", BUILD_PRICE_LEFT, LAND_PRICE_LEFT, LAND_TEXT_VERTICAL, (LAND_TEXT_HORIZONTAL * 2) - 4);
 
 		// Top 땅들
-		m_Lands[5].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"도    쿄", 8, BUILD_PRICE_TOP, LAND_PRICE_TOP, 0, (LAND_TEXT_VERTICAL * 5) - 1, 1);
-		m_Lands[6].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"시 드 니", 11, BUILD_PRICE_TOP, LAND_PRICE_TOP, 0, (LAND_TEXT_VERTICAL * 9) - 2, 1);
-		m_Lands[7].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"퀘    벡", 15, BUILD_PRICE_TOP, LAND_PRICE_TOP, 0, (LAND_TEXT_VERTICAL * 13) - 3, 1);
-		m_Lands[8].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"하 와 이", 15, BUILD_PRICE_TOP, LAND_PRICE_TOP, 0, (LAND_TEXT_VERTICAL * 17) - 4, 1);
-		m_Lands[9].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"상파울로", 15, BUILD_PRICE_TOP, LAND_PRICE_TOP, 0, (LAND_TEXT_VERTICAL * 21) - 5, 1);
+		m_Lands[5].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"도    쿄", BUILD_PRICE_TOP, LAND_PRICE_TOP, (LAND_TEXT_VERTICAL * 5) - 1, 1);
+		m_Lands[6].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"시 드 니", BUILD_PRICE_TOP, LAND_PRICE_TOP, (LAND_TEXT_VERTICAL * 9) - 2, 1);
+		m_Lands[7].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"퀘    벡", BUILD_PRICE_TOP, LAND_PRICE_TOP, (LAND_TEXT_VERTICAL * 13) - 3, 1);
+		m_Lands[8].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"하 와 이", BUILD_PRICE_TOP, LAND_PRICE_TOP, (LAND_TEXT_VERTICAL * 17) - 4, 1);
+		m_Lands[9].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"상파울로", BUILD_PRICE_TOP, LAND_PRICE_TOP, (LAND_TEXT_VERTICAL * 21) - 5, 1);
 
 		// Right 땅들
-		m_Lands[10].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"프 라 하", 15, BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 2) - 4);
-		m_Lands[11].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"베 를 린", 15, BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 3) - 3);
-		m_Lands[12].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"모스크바", 15, BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 4) - 2);
-		m_Lands[13].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"제 네 바", 11, BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 5) - 1);
-		m_Lands[14].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"로    마", 8, BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, 0, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 6));
+		m_Lands[10].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"프 라 하", BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 2) - 4);
+		m_Lands[11].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"베 를 린", BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 3) - 3);
+		m_Lands[12].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"모스크바", BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 4) - 2);
+		m_Lands[13].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"제 네 바", BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 5) - 1);
+		m_Lands[14].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"로    마", BUILD_PRICE_RIGHT, LAND_PRICE_RIGHT, (LAND_TEXT_VERTICAL * 25) - 6, (LAND_TEXT_HORIZONTAL * 6));
 
 		// Bottom 땅들
-		m_Lands[15].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"평    양", 15, BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, 0, (LAND_TEXT_VERTICAL * 21) - 5, (LAND_TEXT_HORIZONTAL * 7) + 1);
-		m_Lands[16].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"런    던", 15, BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, 0, (LAND_TEXT_VERTICAL * 17) - 4, (LAND_TEXT_HORIZONTAL * 7) + 1);
-		m_Lands[17].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"파    리", 15, BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, 0, (LAND_TEXT_VERTICAL * 13) - 3, (LAND_TEXT_HORIZONTAL * 7) + 1);
-		m_Lands[18].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"뉴    욕", 11, BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, 0, (LAND_TEXT_VERTICAL * 9) - 2, (LAND_TEXT_HORIZONTAL * 7) + 1);
-		m_Lands[19].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"서    울", 8, BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, 0, (LAND_TEXT_VERTICAL * 5) - 1, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[15].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"평    양", BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, (LAND_TEXT_VERTICAL * 21) - 5, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[16].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"런    던", BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, (LAND_TEXT_VERTICAL * 17) - 4, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[17].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"파    리", BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, (LAND_TEXT_VERTICAL * 13) - 3, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[18].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"뉴    욕", BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, (LAND_TEXT_VERTICAL * 9) - 2, (LAND_TEXT_HORIZONTAL * 7) + 1);
+		m_Lands[19].Set_LandInfo(0, (TCHAR *)"", (TCHAR *)"서    울", BUILD_PRICE_BOTTOM, LAND_PRICE_BOTTOM, (LAND_TEXT_VERTICAL * 5) - 1, (LAND_TEXT_HORIZONTAL * 7) + 1);
 	}
 
 	///ExtranLands에 대한 정보를 초기화 한다.
@@ -231,11 +231,13 @@ void CGame::Print_Game_Board()
 		/// 땅 + 특수 땅 정보 출력
 		Print_All_Land();
 		Print_All_ExtraLand();
+		
 		m_Lands->Print_Information(eLandPrint_Idx);
 		/// 주사위 출력 및 주사위 굴리기
  		m_Dice.Dice_Proc(*this);
 		/// 캐릭터 정보 출력(주사위 던지지지 않았을 때만, 주사위 던질 때는 Dice에서 알아서 처리하니까)
 		Print_All_Character();
+		Print_Player_Infor();	// 플레이어 정보 출력
 		/// 사운드 업데이트
 		Check_BGM();
 		FMOD_System_Update(g_System);	// 이 함수를 계속적으로 호출해줘야 사운드가 씹히지 않는다.
@@ -248,13 +250,22 @@ void CGame::Print_Game_Board()
 void CGame::Print_Indivisual_Tile(int x, int y) //게임 타일 출력  네모 1개.
 {
 	int iNext_Line = 0;	// 다음 줄
-
+#if OS_VER == 7
+	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"┌────────┐");
+#elif OS_VER == 10
 	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"┌────────────────┐");
+#endif
 	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
 	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
 	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
 	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"│                │");
+#if OS_VER == 7
+	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"└────────┘");
+#elif OS_VER == 10
 	g_DBBF.WriteBuffer(x, y + iNext_Line++, (TCHAR *)"└────────────────┘");
+#endif
+	//타일 크기 조정 , 윈 7 ,윈 10
+
 }
 
 void CGame::MoveXY(int x, int y)
@@ -389,6 +400,7 @@ void CGame::RePaint(BOOL bSleep)
 	m_Lands->Print_Information(eLandPrint_Idx);
 	Print_All_Character();
 	m_Dice.Print_Diceinfo();
+	Print_Player_Infor();
 	Print_Dice_Result_Text(); //주사위 결과값 출력
 
 	if(bSleep == TRUE)
@@ -580,3 +592,119 @@ void CGame::Print_Dice_Result_Text()
 #endif
 	}
 };
+void CGame::Print_Player_Infor()
+{
+	int iNext_Line;
+
+	char cPlayer_Money1[30] = { "" };
+	char cPlayer_Money2[30] = { "" };
+	char cPlayer_Money3[30] = { "" };
+	char cPlayer_Money4[30] = { "" };
+
+	char cPlayer_Total_Money1[30] = { "" };
+	char cPlayer_Total_Money2[30] = { "" };
+	char cPlayer_Total_Money3[30] = { "" };
+	char cPlayer_Total_Money4[30] = { "" };
+
+	/*for (int i = 0; i < 3; i++)
+	{
+	m_Player[i].Set_PlayerTotalMoney();
+	}*/
+	if (iPlayerNum >= 2)
+	{
+		g_DBBF.TextColor(P1_COLOR, BLACK);
+		iNext_Line = 0;
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"┌────────┐");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"┌────────────────┐");
+#endif
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│ 플레이어1 : ♠ │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│                │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│ 보유 돈  :     │");
+		wsprintf(cPlayer_Money1, TEXT("│ %d 만원        │"), m_Player[0].iPlayer_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)cPlayer_Money1);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│ 총 자산 :      │");
+		wsprintf(cPlayer_Total_Money1, TEXT("│ %d 만원        │"), m_Player[0].iPlayer_Total_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)cPlayer_Total_Money1);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│                │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│                │");
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"└────────┘");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"└────────────────┘");
+#endif
+		g_DBBF.TextColor(P2_COLOR, BLACK);
+		iNext_Line = 0;
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"┌────────┐");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"┌────────────────┐");
+#endif
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│ 플레이어2 : ◆ │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│                │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│ 보유 돈  :     │");
+		wsprintf(cPlayer_Money2, "│ %d 만원        │", m_Player[1].iPlayer_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)cPlayer_Money2);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│ 총 자산 :      │");
+		wsprintf(cPlayer_Total_Money2, "│ %d 만원        │", m_Player[1].iPlayer_Total_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)cPlayer_Total_Money2);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│                │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"│                │");
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"└────────┘");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"└────────────────┘");
+#endif
+	}
+	if (iPlayerNum >= 3)
+	{
+		g_DBBF.TextColor(P3_COLOR, BLACK);
+		iNext_Line = 0;
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"┌────────┐");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"┌────────────────┐");
+#endif
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│ 플레이어3 : ♥ │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│                │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│ 보유 돈  :     │");
+		wsprintf(cPlayer_Money3, "│ %d 만원        │", m_Player[2].iPlayer_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)cPlayer_Money3);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│ 총 자산 :      │");
+		wsprintf(cPlayer_Total_Money3, "│ %d 만원        │", m_Player[2].iPlayer_Total_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)cPlayer_Total_Money3);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│                │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│                │");
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"└────────┘");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"└────────────────┘");
+#endif
+	}
+	if (iPlayerNum >= 4)
+	{
+		g_DBBF.TextColor(P4_COLOR, BLACK);
+		iNext_Line = 0;
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"┌────────┐");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"┌────────────────┐");
+#endif
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│ 플레이어4 : ♣ │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│                │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│ 보유 돈  :     │");
+		wsprintf(cPlayer_Money4, "│ %d 만원        │", m_Player[3].iPlayer_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)cPlayer_Money4);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│ 총 자산 :      │");
+		wsprintf(cPlayer_Total_Money4, "│ %d 만원        │", m_Player[3].iPlayer_Total_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)cPlayer_Total_Money4);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│                │");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"│                │");
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"└────────┘");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"└────────────────┘");
+#endif
+	}
+}

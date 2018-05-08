@@ -87,6 +87,7 @@ private:
 	void Print_Dice_Gage();	// 주사위 게이지 그리기(전체 관장)
 	void Print_Player_Turn(); //플레이어 턴 출력
 	void Print_Dice_Result_Text(); // 주사위 전체 출력
+	void Print_Player_Infor();	// 플레이어 정보창 출력
 
 public:
 	CGame();

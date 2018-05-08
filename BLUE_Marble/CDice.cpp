@@ -16,10 +16,10 @@ int CDice::Throw_Dice(int x, int y, BOOL *bIsDouble)
 {
 	pos.X = x;
 	pos.Y = y;
-	iDice1 = rand() % 6 + 1;
-	iDice2 = rand() % 6 + 1;
-	//iDice1 = 4;
-	//iDice2 = 2;
+	//iDice1 = rand() % 6 + 1;
+	//iDice2 = rand() % 6 + 1;
+	iDice1 = 4;
+	iDice2 = 1;
 	if (iDice1 == iDice2)
 		*bIsDouble = TRUE;
 	iDice_result = iDice1 + iDice2;
@@ -392,6 +392,7 @@ void CDice::Dice_Proc(CGame &Game)
 					Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
 					Game.Print_All_Character();
 					Game.Print_Player_Turn();
+					Game.Print_Player_Infor();
 					Game.m_Dice.Print_Diceinfo();
 				}
 				g_DBBF.FlippingBuffer();
@@ -455,6 +456,7 @@ void CDice::Print_DiceGage(CGame &Game)
 			Game.Print_Player_Turn();
 			Game.Print_All_Character();
 			Print_Diceinfo();
+			Game.Print_Player_Infor();
 
 			g_DBBF.FlippingBuffer();
 
@@ -552,6 +554,7 @@ void CDice::Print_Dice_Result(CGame &Game)
 		Game.Print_Player_Turn();
 		Game.Print_All_Character();
 		Game.m_Dice.Print_Diceinfo();
+		Game.Print_Player_Infor();
 		g_DBBF.FlippingBuffer();
 
 		// 다음 플레이어로
@@ -566,7 +569,6 @@ void CDice::Print_Dice_Result(CGame &Game)
 			Sleep(500);
 		return;
 	}
-
 
 	// 더블 최대횟수인데 만약에 더블 또 나오면
 	if (Game.m_Player[Game.eCurPlayer].iDiceDoubleCnt >= MAX_DOUBLE && bIsDouble == TRUE) 
@@ -607,6 +609,9 @@ void CDice::Print_Dice_Result(CGame &Game)
 
 	if (bIsDouble == TRUE)
 		Game.m_Player[Game.eCurPlayer].bPlayer_Dice_Double = TRUE;
+
+	else
+		Game.m_Player[Game.eCurPlayer].bPlayer_Dice_Double = FALSE;
 
 	int Land_Diff = 0;	// ExtraLand랑 Land의 차이를 빼주려고
 	iHaveToGo_Idx = (ALL_LANDS)(iDice_Result + ePlayerStand_Idx);	// 가야할 땅 = 현재 밟은 땅 + 주사위 눈 더한 값
@@ -688,6 +693,7 @@ void CDice::Print_Dice_Result(CGame &Game)
 		Game.Print_Dice_Result_Text(); //주사위 결과값 출력
 		Game.Print_All_Character();
 		Game.m_Dice.Print_Diceinfo();
+		Game.Print_Player_Infor();
 
 		Sleep(PLAYER_MOVE_SPEED);
 
@@ -795,6 +801,7 @@ void CDice::Input_WorldTrip(CGame &Game)
 			Game.Print_Dice_Result_Text(); //주사위 결과값 출력
 			Game.Print_All_Character();
 			Game.m_Dice.Print_Diceinfo();
+			Game.Print_Player_Infor();
 			g_DBBF.FlippingBuffer();
 
 			Game.iPlayer_Dice_Result = 0;
@@ -935,6 +942,7 @@ void CDice::Input_WorldTrip(CGame &Game)
 			Game.Print_Player_Turn();
 			Game.Print_All_Character();
 			Game.m_Dice.Print_Diceinfo();
+			Game.Print_Player_Infor();
 			g_DBBF.FlippingBuffer();
 		}
 
