@@ -584,6 +584,8 @@ void CLand::Arrive_Land(CGame &Game)
 						Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
 						Game.Print_All_Character();
 						Game.m_Dice.Print_Diceinfo();
+						Game.Print_Player_Infor();
+						Game.Print_Player_Turn();
 						g_DBBF.FlippingBuffer();
 						return;
 					}
@@ -595,6 +597,7 @@ void CLand::Arrive_Land(CGame &Game)
 				Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
 				Game.Print_All_Character();
 				Game.m_Dice.Print_Diceinfo();
+				Game.Print_Player_Infor();
 
 				g_DBBF.FlippingBuffer();
 			}
@@ -622,46 +625,55 @@ void CLand::Arrive_Land(CGame &Game)
 				g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"└─────────────────────────────────────────┘");
 #endif
 
-				Game.m_Player[Game.eCurPlayer].iPlayer_Money -= Game.m_Lands[Game.eCurPlayer].iLand_Pass_Money;
 
-#if OS_VER == 7
-				g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"┌────────────────────┐");
-#elif OS_VER == 10
-				g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"┌─────────────────────────────────────────┐");
-#endif
-				g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"│ 통행료를 지불 했습니다! (아까운 내돈)   │");
-				g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"│ 이참에 확 사버려???(땅을 인수할까요?)   │");
-				g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"│ (y 또는 n으로 선택)                     │");
-				Game.MoveXY(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++);
-				cin >> cPlayer_Choice;
-#if OS_VER == 7
-				g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"└────────────────────┘");
-#elif OS_VER == 10
-				g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"└─────────────────────────────────────────┘");
-#endif
-				if (_kbhit())
+				// if(통행료 지불하고, 인수 비용까지 충분하다면 물어야 한다.
 				{
-					int iKey = _getch();
-					if (iKey == 'y' || iKey == 'Y')
+#if OS_VER == 7
+					g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"┌────────────────────┐");
+#elif OS_VER == 10
+					g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"┌─────────────────────────────────────────┐");
+#endif
+					g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"│ 통행료를 지불 했습니다! (아까운 내돈)   │");
+					g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"│ 이참에 확 사버려???(땅을 인수할까요?)   │");
+					g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"│ (y 또는 n으로 선택)                     │");
+#if OS_VER == 7
+					g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"└────────────────────┘");
+#elif OS_VER == 10
+					g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"└─────────────────────────────────────────┘");
+#endif
+					if (_kbhit())
 					{
-						// 돈을 내고 땅을 인수한다.
-						MessageBeep(MB_ICONINFORMATION);
-						return;
-					}
-					else if (iKey == 'n' || iKey == 'N')
-					{
-						// 다시 그리고 빠져나간다.
-						g_DBBF.ClearBuffer();
-						Game.Print_All_Tile();
-						Game.Print_All_Land();
-						Game.Print_All_ExtraLand();
-						Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
-						Game.Print_All_Character();
-						Game.m_Dice.Print_Diceinfo();
-						g_DBBF.FlippingBuffer();
-						return;
+						int iKey = _getch();
+						if (iKey == 'y' || iKey == 'Y')
+						{
+							// 돈을 내고 땅을 인수한다.
+							Buy_Land(Game);
+							return;
+						}
+						else if (iKey == 'n' || iKey == 'N')
+						{
+							// 다시 그리고 빠져나간다.
+							g_DBBF.ClearBuffer();
+							Game.Print_All_Tile();
+							Game.Print_All_Land();
+							Game.Print_All_ExtraLand();
+							Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
+							Game.Print_All_Character();
+							Game.m_Dice.Print_Diceinfo();
+							Game.Print_Player_Infor();
+							g_DBBF.FlippingBuffer();
+							return;
+						}
 					}
 				}
+				Game.Print_All_Tile();
+				Game.Print_All_Land();
+				Game.Print_All_ExtraLand();
+				Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
+				Game.Print_All_Character();
+				Game.m_Dice.Print_Diceinfo();
+				Game.Print_Player_Infor();
+				g_DBBF.FlippingBuffer();
 			}
 		}
 		else if ( !lstrcmp(cLand_Owner, Game.m_Player[Game.eCurPlayer].cPlayer_Shape) )
@@ -742,7 +754,13 @@ void CLand::Buy_Land(CGame &Game)
 #elif OS_VER == 10
 			g_DBBF.WriteBuffer(LAND_SIGN_XPOS, LAND_SIGN_YPOS + iNext_Line++, (TCHAR *)"└────────────────────────────────────────┘");
 #endif
-}
+		}
+
+		if (bBuy == TRUE)
+		{
+			lstrcpy(cLand_Owner, Game.m_Player[Game.eCurPlayer].cPlayer_Shape);
+			// 돈 감소
+		}
 
 		Game.Print_All_Tile();
 		Game.Print_All_Land();
@@ -750,13 +768,10 @@ void CLand::Buy_Land(CGame &Game)
 		Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
 		Game.Print_All_Character();
 		Game.m_Dice.Print_Diceinfo();
+		Game.Print_Player_Infor();
 		g_DBBF.FlippingBuffer();
-	}
-	if (bBuy == TRUE)
-	{
-		Game.m_Player[Game.eCurPlayer].iPlayer_Money -= iTotal_LandPrice;
-		lstrcpy(cLand_Owner, Game.m_Player[Game.eCurPlayer].cPlayer_Shape);
-		Sleep(1000);
+
+		Sleep(500);
 	}
 }
 

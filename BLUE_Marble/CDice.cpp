@@ -18,7 +18,7 @@ int CDice::Throw_Dice(int x, int y, BOOL *bIsDouble)
 	pos.Y = y;
 	//iDice1 = rand() % 6 + 1;
 	//iDice2 = rand() % 6 + 1;
-	iDice1 = 4;
+	iDice1 = 1;
 	iDice2 = 1;
 	if (iDice1 == iDice2)
 		*bIsDouble = TRUE;
@@ -392,6 +392,7 @@ void CDice::Dice_Proc(CGame &Game)
 					Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
 					Game.Print_All_Character();
 					Game.Print_Player_Turn();
+					Game.Print_Dice_Result_Text();
 					Game.Print_Player_Infor();
 					Game.m_Dice.Print_Diceinfo();
 				}
@@ -591,8 +592,6 @@ void CDice::Print_Dice_Result(CGame &Game)
 		Game.m_Player[Game.eCurPlayer].Move_PlayerPos(cLandPos);
 		Game.m_Player[Game.eCurPlayer].Set_PlayerStandIndex(ISLAND_LAND);
 		Game.m_Player[Game.eCurPlayer].iLeftTurn = LEFT_TURN;	// 남은 턴 수 3회
-		Game.RePaint(FALSE);
-		Game.RePaint(FALSE);	// 두 화면 모두 갱신된 위치로
 
 		Game.iPlayer_Dice_Result = FALSE;
 
@@ -604,6 +603,21 @@ void CDice::Print_Dice_Result(CGame &Game)
 			Game.eCurPlayer = (eCURPLAYER)(Game.eCurPlayer + 1);
 
 		Game.eLandPrint_Idx = (ALL_LANDS)ISLAND_LAND;
+
+		for (int i = 0; i < 2; i++)
+		{
+			g_DBBF.ClearBuffer();
+			Game.Print_All_Tile();
+			Game.Print_All_Land();
+			Game.Print_All_ExtraLand();
+			Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
+			Game.Print_All_Character();
+			Game.m_Dice.Print_Diceinfo();
+			Game.Print_Player_Infor();
+			Game.Print_Player_Turn();
+			g_DBBF.FlippingBuffer();
+		}
+
 		return;
 	}
 
@@ -738,6 +752,8 @@ void CDice::Print_Dice_Result(CGame &Game)
 	case WORLDTRIP_LAND:
 		Game.PlayFX(FX_WORLDTRIP_ARRIVE);
 		Game.m_Player[Game.eCurPlayer].iWorldTrip = WORLDTRIP_SOUND;
+		for (int i = 0; i < 2; i++)
+			Game.RePaint(FALSE);
 		break;
 
 	case GOLDKEY_LAND:
@@ -804,12 +820,17 @@ void CDice::Input_WorldTrip(CGame &Game)
 			Game.Print_Player_Infor();
 			g_DBBF.FlippingBuffer();
 
-			Game.iPlayer_Dice_Result = 0;
+			if (Game.m_Player[Game.eCurPlayer].Get_PlayerStandIndex() == WORLDTRIP_LAND)
+				continue;	// 세계여행은 갈 수 없음
 
 			// 어느 병신이 지 스스로 무인도에 들어갔으면 횟수도 그렇게 만들어 줘야 함.
 			if (Game.m_Player[Game.eCurPlayer].Get_PlayerStandIndex() == ISLAND_LAND)
 				Game.m_Player[Game.eCurPlayer].iLeftTurn = LEFT_TURN;
 
+			Game.iPlayer_Dice_Result = 0;
+			Game.m_Player[Game.eCurPlayer].iWorldTrip = WORLDTRIP_NONE;
+
+			// 다음플레이어로 바로 넘기지말고 땅 구매 여부, 인수 여부를 물어야 함
 			if (Game.eCurPlayer == (Game.iPlayerNum - 1))
 				Game.eCurPlayer = P1;
 
@@ -940,6 +961,7 @@ void CDice::Input_WorldTrip(CGame &Game)
 			Game.Print_All_ExtraLand();
 			Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
 			Game.Print_Player_Turn();
+			Game.Print_Dice_Result_Text(); //주사위 결과값 출력
 			Game.Print_All_Character();
 			Game.m_Dice.Print_Diceinfo();
 			Game.Print_Player_Infor();

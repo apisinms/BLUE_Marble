@@ -527,23 +527,42 @@ void CGame::PlayFX(int idx)
 
 void CGame::Print_Player_Turn()
 {
-	char cPlayer_TurnPrint[50];
+	char cPlayer_TurnPrint[100];
 	int iNext_Line = 0;
 	int iTurn_Print = NULL;
 	iTurn_Print = (int)eCurPlayer + 1;
 	g_DBBF.TextColor(WHITE, BLACK);
+	if (m_Player[eCurPlayer].iWorldTrip == WORLDTRIP_MOVE)
+	{
 #if OS_VER == 7
-	g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"┌─────────────────────┐");
+		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"┌─────────────────────────────┐");
 #elif OS_VER == 10
-	g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"┌──────────────────────────────────────────┐");
+		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"┌──────────────────────────────────────────────────┐");
 #endif
-	wsprintf(cPlayer_TurnPrint, "│ 플레이어 %d의 차례입니다. 주사위를 굴려욧!│", iTurn_Print);
-	g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)cPlayer_TurnPrint);
+		wsprintf(cPlayer_TurnPrint, "│ 플레이어 %d의 차례입니다. 원하는 지역을 선택하세요│", iTurn_Print);
+		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)cPlayer_TurnPrint);
 #if OS_VER == 7
-	g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"└─────────────────────┘");
+		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"└─────────────────────────────┘");
 #elif OS_VER == 10
-	g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"└──────────────────────────────────────────┘");
+		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"└──────────────────────────────────────────────────┘");
 #endif
+	}
+	
+	else if (m_Player[eCurPlayer].iWorldTrip == WORLDTRIP_NONE)
+	{
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"┌─────────────────────┐");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"┌──────────────────────────────────────────┐");
+#endif
+		wsprintf(cPlayer_TurnPrint, "│ 플레이어 %d의 차례입니다. 주사위를 굴려욧!│", iTurn_Print);
+		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)cPlayer_TurnPrint);
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"└─────────────────────┘");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"└──────────────────────────────────────────┘");
+#endif
+	}
 
 }
 void CGame::Print_Dice_Result_Text()
@@ -551,6 +570,22 @@ void CGame::Print_Dice_Result_Text()
 	char cDice_ResultPrint[50];
 	int iNext_Line = 0;
 	g_DBBF.TextColor(WHITE, BLACK);
+
+	if (m_Player[eCurPlayer].iWorldTrip == WORLDTRIP_MOVE)
+	{
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"┌────────────────┐");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"┌─────────────────────────────────────┐");
+#endif
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"│ 세계여행 지역은 선택할 수 없습니다! │");
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"└────────────────┘");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(DICE_TURN_XPOS, DICE_TURN_YPOS + iNext_Line++, (TCHAR *)"└─────────────────────────────────────┘");
+#endif
+		return;
+	}
 
 	if (iPlayer_Dice_Result == 0)
 	{
