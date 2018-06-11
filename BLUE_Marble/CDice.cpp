@@ -16,10 +16,10 @@ int CDice::Throw_Dice(int x, int y, BOOL *bIsDouble)
 {
 	pos.X = x;
 	pos.Y = y;
-	//iDice1 = rand() % 6 + 1;
-	//iDice2 = rand() % 6 + 1;
-	iDice1 = 1;
-	iDice2 = 1;
+	iDice1 = rand() % 6 + 1;
+	iDice2 = rand() % 6 + 1;
+	//iDice1 = 6;
+	//iDice2 = 6;
 	if (iDice1 == iDice2)
 		*bIsDouble = TRUE;
 	iDice_result = iDice1 + iDice2;
@@ -628,10 +628,19 @@ void CDice::Print_Dice_Result(CGame &Game)
 		Game.m_Player[Game.eCurPlayer].bPlayer_Dice_Double = FALSE;
 
 	int Land_Diff = 0;	// ExtraLand랑 Land의 차이를 빼주려고
-	iHaveToGo_Idx = (ALL_LANDS)(iDice_Result + ePlayerStand_Idx);	// 가야할 땅 = 현재 밟은 땅 + 주사위 눈 더한 값
+
+
+		iHaveToGo_Idx = (ALL_LANDS)(iDice_Result + ePlayerStand_Idx);	// 그게아니라면 가야할 땅 = 현재 밟은 땅 + 주사위 눈 더한 값
+
+		// 서울일 때에는 제자리에서 시작
+		int i = 0;
+		if (ePlayerStand_Idx == SEOUL_LAND)
+			i = ePlayerStand_Idx;
+		else
+			i = ePlayerStand_Idx + 1;
 
 	// 가야하는 땅까지 한 칸씩 이동 시킨다.
-	for (int i = ePlayerStand_Idx + 1; i <= iHaveToGo_Idx; i++)
+	for (; i <= iHaveToGo_Idx; i++)
 	{
 		// 인덱스로 현재 땅의 위치를 조사해서 ExtraLand와 Land의 차이를 빼준다.
 		if (i > START_LAND)
@@ -725,7 +734,7 @@ void CDice::Print_Dice_Result(CGame &Game)
 			{
 				Game.PlayFX(FX_MONTH_PAY);
 				// 월급 추가하고 문구 띄움
-				Game.m_Player[Game.eCurPlayer].iPlayer_Money += Game.m_Lands[Game.eCurPlayer].iTotal_LandPrice;
+				Game.m_Player[Game.eCurPlayer].iPlayer_Money += PLAYER_PAY;
 			}
 
 		if (i == SEOUL_LAND)	// 인덱스가 맵 끝지점에 도달하면 빼준다.
@@ -760,15 +769,24 @@ void CDice::Print_Dice_Result(CGame &Game)
 		Game.PlayFX(FX_GOLDKEY_ARRIVE);
 		break;
 
+	case -1:	// 서울 걸렸을 시 처리
+		Game.m_Lands[SEOUL_LAND - Land_Diff].Arrive_Land(Game);
+		break;
+
 
 	default:
 		Game.m_Lands[iHaveToGo_Idx - Land_Diff].Arrive_Land(Game);
 		break;
 	}
-
+	 
 	Game.m_Player[Game.eCurPlayer].Set_PlayerStandIndex((ALL_LANDS)iHaveToGo_Idx);	// 최종 플레이어가 간 땅의 위치를 저장시킴
 	Game.m_Lands[iHaveToGo_Idx].Print_Information((ALL_LANDS)iHaveToGo_Idx);
 	Game.eLandPrint_Idx = (ALL_LANDS)iHaveToGo_Idx;
+
+	if (iHaveToGo_Idx == GOLDKEY_LAND) // 황금열쇠라면 황금열쇠 적용
+		Input_GoldKey(Game);
+
+	Game.m_Player[Game.eCurPlayer].iGoldKey = GOLDKEY_NONE;
 
 	if (bIsDouble == FALSE || Game.m_Player[Game.eCurPlayer].iWorldTrip == WORLDTRIP_SOUND)	// 더블 안나왔거나 세계여행 걸렸을 시
 	{
@@ -797,7 +815,6 @@ void CDice::Input_WorldTrip(CGame &Game)
 	// 선택한 위치가 세계여행만 아니면 이동시켜준다.
 	// 세계여행 인덱스보다 작다면 월급을 지급받아야 한다.
 	// 세계여행 인덱스보다 크다면 한칸 씩 이동하는 건 동일하지만 월급은 안받는다.
-	//Game.m_Player[Game.eCurPlayer].Get_PlayerStandIndex;
 	ALL_LANDS Select_Land_Idx = WORLDTRIP_LAND;	// 초기 위치는 당연히 세계여행
 	int Land_Diff = 1;
 	int iHaveToGo_Idx = 0;
@@ -820,6 +837,8 @@ void CDice::Input_WorldTrip(CGame &Game)
 			Game.Print_Player_Infor();
 			g_DBBF.FlippingBuffer();
 
+			if (Game.m_Player[Game.eCurPlayer].Get_PlayerStandIndex() == GOLDKEY_LAND)
+				continue;
 			if (Game.m_Player[Game.eCurPlayer].Get_PlayerStandIndex() == WORLDTRIP_LAND)
 				continue;	// 세계여행은 갈 수 없음
 
@@ -831,14 +850,30 @@ void CDice::Input_WorldTrip(CGame &Game)
 			Game.m_Player[Game.eCurPlayer].iWorldTrip = WORLDTRIP_NONE;
 
 			// 다음플레이어로 바로 넘기지말고 땅 구매 여부, 인수 여부를 물어야 함
+			Game.PlayFX(FX_WORLDTRIP_FLY);	// 날아가는 효과음 넣음
+			// 특수 땅이면 LandDiff하면 안됨
+			// 시작지점 도착시 소리내고 월급줌
+			if (Game.m_Player[Game.eCurPlayer].Get_PlayerStandIndex() == START_LAND)
+			{
+				Game.PlayFX(FX_MONTH_PAY);
+				Game.m_Player[Game.eCurPlayer].iPlayer_Money += 5;
+			}
+			// 무인도 도착시 소리내고 남은 턴 3회
+			else if (Game.m_Player[Game.eCurPlayer].Get_PlayerStandIndex() == ISLAND_LAND)
+			{
+				Game.PlayFX(FX_ISLAND_ARRIVE);
+				Game.m_Player[Game.eCurPlayer].iLeftTurn = LEFT_TURN;
+			}
+
+			else
+				Game.m_Lands[Game.m_Player[Game.eCurPlayer].Get_PlayerStandIndex() - Land_Diff].Arrive_Land(Game);
+
 			if (Game.eCurPlayer == (Game.iPlayerNum - 1))
 				Game.eCurPlayer = P1;
 
 			else
 				Game.eCurPlayer = (eCURPLAYER)(Game.eCurPlayer + 1);	// 다음 플레이어로
 
-
-			Game.PlayFX(FX_WORLDTRIP_FLY);	// 날아가는 효과음 넣음
 			break;
 		}
 			
@@ -971,3 +1006,169 @@ void CDice::Input_WorldTrip(CGame &Game)
 		Sleep(80);
 	}
 }
+
+void CDice::Input_GoldKey(CGame &Game)
+{
+
+
+	int iGold_result; // 황금열쇠 랜덤 값
+	g_DBBF.TextColor(YELLOW, BLACK);
+	COORD cLandPos;   // 플레이어가 움직여야 할 땅의 포지션
+
+	int AddPos;   // 각 플레이어마다 더해줘야 할 좌표값
+	int iHaveToGo_Idx = 0;   // 가야되는 인덱스
+
+
+	iGold_result = rand() % 3; // 황금열쇠 랜덤 출력
+							   //iGold_result = 0;
+	switch (iGold_result)
+	{
+	case GOLDKEY_WORLDTRIP: // 값이 0 일경우 세계여행
+		Game.m_Player[Game.eCurPlayer].iGoldKey = GOLDKEY_WORLDTRIP;
+		g_DBBF.ClearBuffer();
+		Game.Print_All_Tile();
+		Game.Print_All_Land();
+		Game.Print_All_ExtraLand();
+		Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
+		Game.Print_All_Character();
+		Game.m_Dice.Print_Diceinfo();
+		Game.Print_Player_Infor();
+		Game.Print_Player_Turn();
+		g_DBBF.FlippingBuffer();
+
+		Sleep(500);
+		cLandPos = Game.m_ExtranLands[2].Get_LandPosition();
+		AddPos = P1_POS * (Game.eCurPlayer + 1);
+		cLandPos.X = (cLandPos.X + AddPos) - 2;
+		cLandPos.Y += 2;
+		Game.m_Player[Game.eCurPlayer].Move_PlayerPos(cLandPos);
+		Game.m_Player[Game.eCurPlayer].Set_PlayerStandIndex(WORLDTRIP_LAND);
+		Game.m_Player[Game.eCurPlayer].iWorldTrip = WORLDTRIP_SOUND;
+
+		Game.eLandPrint_Idx = (ALL_LANDS)WORLDTRIP_LAND;
+
+		iHaveToGo_Idx = WORLDTRIP_LAND;
+		Game.m_Player[Game.eCurPlayer].Set_PlayerStandIndex((ALL_LANDS)iHaveToGo_Idx);   // 최종 플레이어가 간 땅의 위치를 저장시킴
+		Game.m_Lands[iHaveToGo_Idx].Print_Information((ALL_LANDS)iHaveToGo_Idx);
+		Game.eLandPrint_Idx = (ALL_LANDS)iHaveToGo_Idx;
+
+		for (int i = 0; i < 2; i++)
+		{
+			g_DBBF.ClearBuffer();
+			Game.Print_All_Tile();
+			Game.Print_All_Land();
+			Game.Print_All_ExtraLand();
+			Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
+			Game.Print_All_Character();
+			Game.m_Dice.Print_Diceinfo();
+			Game.Print_Player_Infor();
+			Game.Print_Player_Turn();
+			g_DBBF.FlippingBuffer();
+		}
+
+		Game.PlayFX(FX_WORLDTRIP_ARRIVE);
+
+		break;
+	case GOLDKEY_ISLAND: // 값이 1일경우 무인도
+		Game.m_Player[Game.eCurPlayer].iGoldKey = GOLDKEY_ISLAND;
+		g_DBBF.ClearBuffer();
+		Game.Print_All_Tile();
+		Game.Print_All_Land();
+		Game.Print_All_ExtraLand();
+		Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
+		Game.Print_All_Character();
+		Game.m_Dice.Print_Diceinfo();
+		Game.Print_Player_Infor();
+		Game.Print_Player_Turn();
+		g_DBBF.FlippingBuffer();
+
+		Sleep(500);
+		cLandPos = Game.m_ExtranLands[1].Get_LandPosition();
+		AddPos = P1_POS * (Game.eCurPlayer + 1);
+		cLandPos.X = (cLandPos.X + AddPos) - 2;
+		cLandPos.Y += 2;
+		Game.m_Player[Game.eCurPlayer].Move_PlayerPos(cLandPos);
+		Game.m_Player[Game.eCurPlayer].Set_PlayerStandIndex(ISLAND_LAND);
+		Game.m_Player[Game.eCurPlayer].iLeftTurn = LEFT_TURN;   // 남은 턴 수 3회
+
+
+		Game.eLandPrint_Idx = (ALL_LANDS)ISLAND_LAND;
+
+
+
+
+		for (int i = 0; i < 2; i++)
+		{
+			g_DBBF.ClearBuffer();
+			Game.Print_All_Tile();
+			Game.Print_All_Land();
+			Game.Print_All_ExtraLand();
+			Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
+			Game.Print_All_Character();
+			Game.m_Dice.Print_Diceinfo();
+			Game.Print_Player_Infor();
+			Game.Print_Player_Turn();
+			g_DBBF.FlippingBuffer();
+		}
+
+		Game.PlayFX(FX_ISLAND_ARRIVE);
+
+		break;
+	case GOLDKEY_START: // 값이 2일경우 시작
+		Game.m_Player[Game.eCurPlayer].iGoldKey = GOLDKEY_START;
+		Game.m_Player[Game.eCurPlayer].iPlayer_Money += PLAYER_PAY;
+		g_DBBF.ClearBuffer();
+		Game.Print_All_Tile();
+		Game.Print_All_Land();
+		Game.Print_All_ExtraLand();
+		Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
+		Game.Print_All_Character();
+		Game.m_Dice.Print_Diceinfo();
+		Game.Print_Player_Infor();
+		Game.Print_Player_Turn();
+		g_DBBF.FlippingBuffer();
+
+		Sleep(500);
+		cLandPos = Game.m_ExtranLands[0].Get_LandPosition();
+		AddPos = P1_POS * (Game.eCurPlayer + 1);
+		cLandPos.X = (cLandPos.X + AddPos) - 2;
+		cLandPos.Y += 2;
+		Game.m_Player[Game.eCurPlayer].Move_PlayerPos(cLandPos);
+		Game.m_Player[Game.eCurPlayer].Set_PlayerStandIndex(START_LAND);
+
+		Game.eLandPrint_Idx = (ALL_LANDS)START_LAND;
+
+
+		iHaveToGo_Idx = START_LAND;
+		Game.m_Player[Game.eCurPlayer].Set_PlayerStandIndex((ALL_LANDS)iHaveToGo_Idx);   // 최종 플레이어가 간 땅의 위치를 저장시킴
+		Game.m_Lands[iHaveToGo_Idx].Print_Information((ALL_LANDS)iHaveToGo_Idx);
+		Game.eLandPrint_Idx = (ALL_LANDS)iHaveToGo_Idx;
+
+		for (int i = 0; i < 2; i++)
+		{
+			g_DBBF.ClearBuffer();
+			Game.Print_All_Tile();
+			Game.Print_All_Land();
+			Game.Print_All_ExtraLand();
+			Game.m_Lands->Print_Information(Game.eLandPrint_Idx);
+			Game.Print_All_Character();
+			Game.m_Dice.Print_Diceinfo();
+			Game.Print_Player_Infor();
+			Game.Print_Player_Turn();
+			g_DBBF.FlippingBuffer();
+		}
+
+		Game.PlayFX(FX_MONTH_PAY);
+
+		break;
+	}
+
+	// 다음 플레이어로
+	if (Game.eCurPlayer == (Game.iPlayerNum - 1))
+		Game.eCurPlayer = P1;
+
+	else
+		Game.eCurPlayer = (eCURPLAYER)(Game.eCurPlayer + 1);
+}
+
+

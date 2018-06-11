@@ -15,6 +15,7 @@ private:
 	COORD pos;
 	ALL_LANDS eStand_idx = START_LAND;	// 밟고 있는 땅(시작부터)
 	int iPlayer_Total_Money;
+	int iGoldKey = GOLDKEY_NONE;
 
 public:
 	CPlayer();

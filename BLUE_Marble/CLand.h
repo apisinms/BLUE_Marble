@@ -16,6 +16,7 @@ private:
 	int iLand_Building; //∞«π∞
 	TCHAR *cLand_Owner = nullptr; // ∂• º“¿Ø¡÷
 	TCHAR *cLand_Name = nullptr;	// ∂•¿« ¿Ã∏ß
+	TCHAR *cBuilding_Grade = nullptr;	// ∫Ùµ˘ ∞πºˆ
 	int iLand_Pass_Money; // ≈Î«‡∑·
 	int iLand_Build_Price; // ∞«π∞∞°∞›
 	int iLand_Price; // ∂• ∞°∞›
@@ -29,7 +30,7 @@ public:
 	void Set_LandInfo(int iLand_Building, TCHAR *cLand_Owner, TCHAR *cLand_Name, int iLand_Build_Price,
 		int iLand_Price, int x, int y);
 
-	void Buy_Land(CGame &Game); // ∂• ±∏¿‘
+	void Buy_Land(CGame &Game, BOOL EMPTY); // ∂• ±∏¿‘
 	void Build_Building(CGame &Game);	// ∞«π∞ ∞«º≥
 	void Arrive_Land(CGame &Game); // ∂•ø° µµ¬¯ Ω√.
 	void Sell_Land(CGame &Game);	// ∂• ∆»±‚

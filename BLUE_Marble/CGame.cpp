@@ -528,6 +528,7 @@ void CGame::PlayFX(int idx)
 void CGame::Print_Player_Turn()
 {
 	char cPlayer_TurnPrint[100];
+	char cGoldKey_Print[100];  // �盛暆乘� 轎溘 僥濠翮
 	int iNext_Line = 0;
 	int iTurn_Print = NULL;
 	iTurn_Print = (int)eCurPlayer + 1;
@@ -546,8 +547,8 @@ void CGame::Print_Player_Turn()
 #elif OS_VER == 10
 		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
 #endif
-	}
-	
+}
+
 	else if (m_Player[eCurPlayer].iWorldTrip == WORLDTRIP_NONE)
 	{
 #if OS_VER == 7
@@ -561,6 +562,56 @@ void CGame::Print_Player_Turn()
 		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式式戎");
 #elif OS_VER == 10
 		g_DBBF.WriteBuffer(PLAYER_TURN_XPOS, PLAYER_TURN_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
+#endif
+   }
+	iNext_Line = 0;
+	if (m_Player[eCurPlayer].iGoldKey == GOLDKEY_NONE)
+	{
+
+	}
+	else if (m_Player[eCurPlayer].iGoldKey == GOLDKEY_WORLDTRIP)
+	{
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖");
+#endif
+		wsprintf(cGoldKey_Print, "弛 �盛暆乘� : 撮啗罹ч縑 渡繩腎樟蝗棲棻! 蹴жм棲棻!弛");
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)cGoldKey_Print);
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
+#endif
+	}
+	else if (m_Player[eCurPlayer].iGoldKey == GOLDKEY_ISLAND)
+	{
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖");
+#endif
+		wsprintf(cGoldKey_Print, "弛 �盛暆乘� : 鼠檣紫縑 渡繩腎樟蝗棲棻!! Д六Д六    弛");
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)cGoldKey_Print);
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
+#endif
+	}
+	else if (m_Player[eCurPlayer].iGoldKey == GOLDKEY_START)
+	{
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖");
+#endif
+		wsprintf(cGoldKey_Print, "弛 �盛暆乘� : 轎嫦雖煎 陛鍔嬴! 渡繩腎樟蝗棲棻!!!    弛");
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)cGoldKey_Print);
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(GOLDKEY_XPOS, GOLDKEY_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
 #endif
 	}
 
@@ -650,46 +701,46 @@ void CGame::Print_Player_Infor()
 		g_DBBF.TextColor(P1_COLOR, BLACK);
 		iNext_Line = 0;
 #if OS_VER == 7
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式忖");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式");
 #elif OS_VER == 10
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式忖");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式");
 #endif
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 Ы溯檜橫1 : Ⅳ 弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 爾嶸 絲  :     弛");
-		wsprintf(cPlayer_Money1, TEXT("弛 %d 虜錳        弛"), m_Player[0].iPlayer_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 Ы溯檜橫1 : Ⅳ ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 爾嶸 絲  :     ");
+		wsprintf(cPlayer_Money1, TEXT("弛 %d 虜錳        "), m_Player[0].iPlayer_Money);
 		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)cPlayer_Money1);
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 識 濠骯 :      弛");
-		wsprintf(cPlayer_Total_Money1, TEXT("弛 %d 虜錳        弛"), m_Player[0].iPlayer_Total_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 識 濠骯 :      ");
+		wsprintf(cPlayer_Total_Money1, TEXT("弛 %d 虜錳        "), m_Player[0].iPlayer_Total_Money);
 		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)cPlayer_Total_Money1);
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                弛");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                ");
 #if OS_VER == 7
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式戎");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式");
 #elif OS_VER == 10
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式戎");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式");
 #endif
 		g_DBBF.TextColor(P2_COLOR, BLACK);
 		iNext_Line = 0;
 #if OS_VER == 7
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式忖");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式");
 #elif OS_VER == 10
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式忖");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式");
 #endif
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 Ы溯檜橫2 : ﹣ 弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 爾嶸 絲  :     弛");
-		wsprintf(cPlayer_Money2, "弛 %d 虜錳        弛", m_Player[1].iPlayer_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 Ы溯檜橫2 : ﹣ ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 爾嶸 絲  :     ");
+		wsprintf(cPlayer_Money2, "弛 %d 虜錳        ", m_Player[1].iPlayer_Money);
 		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)cPlayer_Money2);
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 識 濠骯 :      弛");
-		wsprintf(cPlayer_Total_Money2, "弛 %d 虜錳        弛", m_Player[1].iPlayer_Total_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛 識 濠骯 :      ");
+		wsprintf(cPlayer_Total_Money2, "弛 %d 虜錳        ", m_Player[1].iPlayer_Total_Money);
 		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)cPlayer_Total_Money2);
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                弛");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"弛                ");
 #if OS_VER == 7
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式戎");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式");
 #elif OS_VER == 10
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式戎");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式");
 #endif
 	}
 	if (iPlayerNum >= 3)
@@ -697,24 +748,24 @@ void CGame::Print_Player_Infor()
 		g_DBBF.TextColor(P3_COLOR, BLACK);
 		iNext_Line = 0;
 #if OS_VER == 7
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"忙式式式式式式式式忖");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"忙式式式式式式式式");
 #elif OS_VER == 10
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式忖");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式");
 #endif
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 Ы溯檜橫3 : Ⅵ 弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 爾嶸 絲  :     弛");
-		wsprintf(cPlayer_Money3, "弛 %d 虜錳        弛", m_Player[2].iPlayer_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 Ы溯檜橫3 : Ⅵ ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 爾嶸 絲  :     ");
+		wsprintf(cPlayer_Money3, "弛 %d 虜錳        ", m_Player[2].iPlayer_Money);
 		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)cPlayer_Money3);
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 識 濠骯 :      弛");
-		wsprintf(cPlayer_Total_Money3, "弛 %d 虜錳        弛", m_Player[2].iPlayer_Total_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 識 濠骯 :      ");
+		wsprintf(cPlayer_Total_Money3, "弛 %d 虜錳        ", m_Player[2].iPlayer_Total_Money);
 		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)cPlayer_Total_Money3);
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                弛");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                ");
 #if OS_VER == 7
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"戌式式式式式式式式戎");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"戌式式式式式式式式");
 #elif OS_VER == 10
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式戎");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式");
 #endif
 	}
 	if (iPlayerNum >= 4)
@@ -722,24 +773,89 @@ void CGame::Print_Player_Infor()
 		g_DBBF.TextColor(P4_COLOR, BLACK);
 		iNext_Line = 0;
 #if OS_VER == 7
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"忙式式式式式式式式忖");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"忙式式式式式式式式");
 #elif OS_VER == 10
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式忖");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式");
 #endif
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 Ы溯檜橫4 : Ⅷ 弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 爾嶸 絲  :     弛");
-		wsprintf(cPlayer_Money4, "弛 %d 虜錳        弛", m_Player[3].iPlayer_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 Ы溯檜橫4 : Ⅷ ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 爾嶸 絲  :     ");
+		wsprintf(cPlayer_Money4, "弛 %d 虜錳        ", m_Player[3].iPlayer_Money);
 		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)cPlayer_Money4);
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 識 濠骯 :      弛");
-		wsprintf(cPlayer_Total_Money4, "弛 %d 虜錳        弛", m_Player[3].iPlayer_Total_Money);
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛 識 濠骯 :      ");
+		wsprintf(cPlayer_Total_Money4, "弛 %d 虜錳        ", m_Player[3].iPlayer_Total_Money);
 		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)cPlayer_Total_Money4);
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                弛");
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                弛");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                ");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"弛                ");
 #if OS_VER == 7
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"戌式式式式式式式式戎");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"戌式式式式式式式式");
 #elif OS_VER == 10
-		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式戎");
+		g_DBBF.WriteBuffer(PLAYER_INFOR_XPOS + 20, PLAYER_INFOR_YPOS + 10 + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式");
 #endif
+	}
+}
+
+void CGame::Print_WinPlayer(int win, int win_way)
+{
+	int iWin_Player = win;
+	int iWin_way = win_way;
+	int iNext_Line = 0;
+	int iWin_TextColor = win; // 辦蝓 臢蝶お 轎溘 儀
+	char cWin_Player_Print[100];
+	//辦蝓и Ы溯檜橫縑評塭憮 п渡 Ы溯檜橫曖 儀戲煎 臢蝶お 轎溘
+	{
+		if (iWin_TextColor == 1)
+			g_DBBF.TextColor(P1_COLOR, BLACK);
+
+		else if (iWin_TextColor == 2)
+			g_DBBF.TextColor(P2_COLOR, BLACK);
+
+
+		else if (iWin_TextColor == 3)
+			g_DBBF.TextColor(P3_COLOR, BLACK);
+
+
+		else if (iWin_TextColor == 4)
+			g_DBBF.TextColor(P4_COLOR, BLACK);
+	}
+
+	if (iWin_way == 0) //絲戲煎 辦蝓 衛
+	{
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式式式式式忖");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖");
+#endif
+		wsprintf(cWin_Player_Print, "弛 Ы溯檜橫 %d陛 棻艇 Ы溯檜橫菟檜 だ骯    弛", iWin_Player);
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)cWin_Player_Print);
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"弛 ж朝 陛遴等 部梱雖 唯筑麻蝗棲棻!!!      弛");
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"弛 蹴ж萄董棲棻! 檜啣蝗棲棻!!              弛");
+
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式戎");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
+#endif
+	}
+	//塭檣絮薄
+	else
+	{
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式式式式式忖");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖");
+#endif
+		wsprintf(cWin_Player_Print, "弛 Ы溯檜橫 %d陛 塭檣擊 賅舒 衙熱ц蝗棲棻! 弛", iWin_Player);
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)cWin_Player_Print);
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"弛 塭檣絮薄!!戲煎 辦蝓ц蝗棲棻!!!          弛");
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"弛 蹴ж萄董棲棻! 檜啣蝗棲棻!!              弛");
+
+#if OS_VER == 7
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式戎");
+#elif OS_VER == 10
+		g_DBBF.WriteBuffer(PLAYER_WIN_XPOS, PLAYER_WIN_YPOS + iNext_Line++, (TCHAR *)"戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
+#endif
+
+		exit(0);
 	}
 }

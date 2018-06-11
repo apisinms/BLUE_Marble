@@ -95,6 +95,8 @@ public:
 
 	void PlayGame();
 	void PlayFX(int idx);
+	void Print_WinPlayer(int win, int win_way);	// 승리한 사람 출력
+
 };
 
 #endif

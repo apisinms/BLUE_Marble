@@ -13,8 +13,10 @@ private:
 	void Print_DiceGage(CGame &Game);
 	void Print_Dice_Result(CGame &Game);
 	void Input_WorldTrip(CGame &Game);
+	void Input_GoldKey(CGame &Game);
 	void TextColor(int foreground, int background);
 	void MoveXY(int x, int y);
+	
 	int iDice1, iDice2;
 	
 public:

@@ -1,2 +1,12 @@
-﻿  CLand.cpp
-  BLUE_Marble.vcxproj -> C:\_PROGRAMMING_\SCHOOL_2A\C++\프로젝트\중간고사과제\BLUE_Marble\Debug\BLUE_Marble.exe
+﻿  stdafx.cpp
+  BLUE_Marble.cpp
+  CDice.cpp
+  CDoubleBuffering.cpp
+  CExtraLand.cpp
+  CGame.cpp
+  CLand.cpp
+c:\_programming_\school_2a\c++\프로젝트\기말고사과제\blue_marble\blue_marble\cland.cpp(463): warning C4101: 'cPlayer_Choice' :참조되지 않은 지역 변수입니다.
+c:\_programming_\school_2a\c++\프로젝트\기말고사과제\blue_marble\blue_marble\cland.cpp(785): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  CPlayer.cpp
+  코드를 생성하고 있습니다...
+  BLUE_Marble.vcxproj -> C:\_PROGRAMMING_\SCHOOL_2A\C++\프로젝트\기말고사과제\BLUE_Marble\Debug\BLUE_Marble.exe
